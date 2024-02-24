@@ -11,10 +11,12 @@ namespace Engine
     public class Screen 
     {
         protected Texture2D _box;
+        protected Texture2D _player2;
    
-        public Screen(Texture2D box) 
+        public Screen(Texture2D box, Texture2D player2) 
         {
-              _box = box;
+            _box = box;
+            _player2 = player2;
         }
 
         public virtual void Update(GameTime gameTime)

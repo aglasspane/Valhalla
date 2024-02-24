@@ -8,9 +8,19 @@ using System.Threading.Tasks;
 
 namespace Engine
 {
-    public class Fred : Character
+    public class Fighter : Character
     {
-        public Fred(Texture2D t, Vector2 position) : base(position)
+        public Fighter(Texture2D t, Vector2 position, int playerIndex) : base(position, playerIndex)
+        {
+            Initialize(t);
+        }
+
+        public Fighter(Texture2D t, Vector2 position, int playerIndex, Direction direction) : base(position, playerIndex, direction)
+        {
+            Initialize(t);
+        }
+
+        private void Initialize(Texture2D t)
         {
             spriteSheet = t;
 
@@ -27,8 +37,11 @@ namespace Engine
 
             List<AnimationFrame> punchFrames = new()
             {
-                new AnimationFrame(new Rectangle(0, 128, 64, 64), 1000),
-                
+                new AnimationFrame(new Rectangle(0, 128, 64, 64), 100),
+
+
+
+                //Other attack frames
                 //new AnimationFrame(new Rectangle(192, 128, 64, 64), 100),
                 //new AnimationFrame(new Rectangle(256, 128, 64, 64), 100),
                 //new AnimationFrame(new Rectangle(320, 128, 64, 64), 200),
@@ -47,10 +60,17 @@ namespace Engine
             State punchState2 = new(punchFrames2);
             states.Add("punch2", punchState2);
 
-
+            List<AnimationFrame> moveFrames = new()
+            {
+                new AnimationFrame(new Rectangle(64, 64, 64, 64), 200),
+                new AnimationFrame(new Rectangle(128, 64, 64, 64), 100),
+            };
+            State moveState = new(moveFrames);
+            states.Add("move", moveState);
 
             // add another state here
             currentState = idle;
         }
+
     }
 }

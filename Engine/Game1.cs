@@ -40,14 +40,15 @@ namespace Engine
             _myWhiteBox = new Texture2D(GraphicsDevice, 1, 1);
             _myWhiteBox.SetData(new[] { Color.White });
 
-            _screens.Add("MainMenu", new MainMenu(_myWhiteBox));
+            _screens.Add("MainMenu", new MainMenu(_myWhiteBox, new Texture2D(GraphicsDevice, 1, 1)));
             // TODO: use this.Content to load your game content here
             //ChangeActiveScreen("MainMenu");
 
             Content.RootDirectory = "Content";
             Texture2D spritesheet = Content.Load<Texture2D>("Man");
+            Texture2D anotherSpritesheet = Content.Load<Texture2D>("Man");
 
-            _screens.Add("GameScreen", new GameScreen(spritesheet));
+            _screens.Add("GameScreen", new GameScreen(spritesheet, anotherSpritesheet));
             ChangeActiveScreen("GameScreen");
 
 

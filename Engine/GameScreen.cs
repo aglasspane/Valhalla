@@ -13,44 +13,29 @@ namespace Engine
     {
 
 
-        protected GamePadState? _previousState = null;
 
-        protected Character _fred;
+        protected Character _fighter;
+        protected Character _fighter2;
 
-        public GameScreen(Texture2D t) : base(t)
+        public GameScreen(Texture2D t, Texture2D t2) : base(t, t2)
         { 
-            _fred = new Fred(t, new Vector2(0,0));
+            _fighter = new Fighter(t, new Vector2(0,0), 0 , Direction.Right);
+            _fighter2 = new Fighter(t2, new Vector2(400, 0), 1);
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch? gd)
         {
-            _fred.Draw(gameTime, gd);
+            _fighter.Draw(gameTime, gd);
+            _fighter2.Draw(gameTime, gd);
 
             base.Draw(gameTime, gd);
         }
 
         public override void Update(GameTime gameTime)
         {
-            _fred.Update(gameTime);
+            _fighter.Update(gameTime);
+            _fighter2.Update(gameTime);
 
-            GamePadState currentState = GamePad.GetState(0);
-            if (_previousState != null)
-            {
-                if (currentState.IsButtonDown(Buttons.X) && !_previousState.GetValueOrDefault().IsButtonDown(Buttons.X))
-                {
-                    _fred.ChangeState("punch");
-
-                
-
-                }
-                if (GamePad.GetState(0).IsButtonDown(Buttons.X) && _previousState.GetValueOrDefault().IsButtonDown(Buttons.X))
-                {
-                    _fred.ChangeState("punch2");
-                }
-
-            }
-
-            _previousState = currentState;
 
             base.Update(gameTime);
         }
