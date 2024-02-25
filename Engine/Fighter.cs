@@ -22,17 +22,22 @@ namespace Engine
 
         private void Initialize(Texture2D t)
         {
+            //This method contains all animations for the fighter class
             spriteSheet = t;
 
             List<AnimationFrame> frames = new()
             {
+                //Each AnimationFrame contains where on the spritesheet we are getting the value from and the time it last for (milliseconds) 
+
                 new AnimationFrame(new Rectangle(0, 0, 64, 64), 500),
                 new AnimationFrame(new Rectangle(64, 0, 64, 64), 1000000000),
                 //new AnimationFrame(new Rectangle(128, 0, 64, 64),750)
             };
 
+            //This creates a state which relates to the animation meaning you can use it to change the animation
             State idle = new(frames);
 
+            //This adds the state to the list of states
             states.Add("idle", idle);
 
             List<AnimationFrame> punchFrames = new()
@@ -41,13 +46,7 @@ namespace Engine
 
 
 
-                //Other attack frames
-                //new AnimationFrame(new Rectangle(192, 128, 64, 64), 100),
-                //new AnimationFrame(new Rectangle(256, 128, 64, 64), 100),
-                //new AnimationFrame(new Rectangle(320, 128, 64, 64), 200),
-                //new AnimationFrame(new Rectangle(384, 128, 64, 64), 100),
-                //new AnimationFrame(new Rectangle(448, 128, 64, 64), 200)
-
+                
             };
             State punchState = new(punchFrames);
             states.Add("punch", punchState);
@@ -63,14 +62,44 @@ namespace Engine
             List<AnimationFrame> moveFrames = new()
             {
                 new AnimationFrame(new Rectangle(64, 64, 64, 64), 200),
-                new AnimationFrame(new Rectangle(128, 64, 64, 64), 100),
+                new AnimationFrame(new Rectangle(128, 64, 64, 64), 10000),
             };
             State moveState = new(moveFrames);
             states.Add("move", moveState);
 
-            // add another state here
+            List<AnimationFrame> swordFrames = new()
+            {
+                new AnimationFrame(new Rectangle(256, 448, 64, 64), 100),
+                new AnimationFrame(new Rectangle(320, 448, 64, 64), 75),
+                new AnimationFrame(new Rectangle(384, 448, 64, 64), 100),
+                new AnimationFrame(new Rectangle(448, 448, 64, 64), 100),
+            };
+            State swordState = new(swordFrames);
+            states.Add("sword", swordState);
+
+
+            List<AnimationFrame> moveAtkFrames = new()
+            {
+                new AnimationFrame(new Rectangle(768, 192, 64, 64), 200),
+                new AnimationFrame(new Rectangle(832, 192, 64, 64), 200),
+            };
+            State moveAtkState = new(moveAtkFrames);
+            states.Add("moveAtk", moveAtkState);
+
+
+
+            
+
+            //Current state is the state that the characters begin with
             currentState = idle;
         }
 
     }
+    //Other attack frames
+    //new AnimationFrame(new Rectangle(192, 128, 64, 64), 100),
+    //new AnimationFrame(new Rectangle(256, 128, 64, 64), 100),
+    //new AnimationFrame(new Rectangle(320, 128, 64, 64), 200),
+    //new AnimationFrame(new Rectangle(384, 128, 64, 64), 100),
+    //new AnimationFrame(new Rectangle(448, 128, 64, 64), 200)
 }
+

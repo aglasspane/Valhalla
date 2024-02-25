@@ -44,6 +44,7 @@ namespace Engine
 
         public virtual void Update(GameTime gameTime)
         {
+            //This records the current state of the gamepad in each 
             GamePadState currentGamePadState = GamePad.GetState(playerIndex);
             if (_previousGamePadState != null)
             {
@@ -57,15 +58,16 @@ namespace Engine
                 }
 
             }
-
-            _previousGamePadState = currentGamePadState;
-            currentState?.Update(gameTime);
-
-            if (currentState is not null && currentState.Finished)
+            if (currentGamePadState.IsButtonDown(Buttons.Y) && !_previousGamePadState.GetValueOrDefault().IsButtonDown(Buttons.Y))
             {
-                currentState.Reset();
-                currentState = states["idle"];
+                ChangeState("sword");
             }
+            if (currentGamePadState.IsButtonDown(Buttons.A) && !_previousGamePadState.GetValueOrDefault().IsButtonDown(Buttons.A) && (currentGamePadState.ThumbSticks.Left.X < 0 || currentGamePadState.ThumbSticks.Left.X > 0))
+            {
+                ChangeState("moveAtk");
+            }
+
+
 
             if (currentGamePadState.ThumbSticks.Left.X < 0)
             {
@@ -79,6 +81,16 @@ namespace Engine
                 direction = Direction.Right;
                 ChangeState("move");
             }
+            _previousGamePadState = currentGamePadState;
+            currentState?.Update(gameTime);
+
+            if (currentState is not null && currentState.Finished)
+            {
+                currentState.Reset();
+                currentState = states["idle"];
+            }
+
+
 
         }
 

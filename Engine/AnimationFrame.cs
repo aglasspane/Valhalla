@@ -16,6 +16,7 @@ namespace Engine
 
         public AnimationFrame(Rectangle source, int frameInterval) 
         { 
+            //These are the parameters for the AnimationFrames
             SourceRectangle = source;
             FrameInterval = frameInterval;
         }

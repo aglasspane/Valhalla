@@ -19,6 +19,7 @@ namespace Engine
 
         public GameScreen(Texture2D t, Texture2D t2) : base(t, t2)
         { 
+            //These are the characters that spawn at the start 
             _fighter = new Fighter(t, new Vector2(0,0), 0 , Direction.Right);
             _fighter2 = new Fighter(t2, new Vector2(400, 0), 1);
         }
@@ -30,7 +31,7 @@ namespace Engine
 
             base.Draw(gameTime, gd);
         }
-
+      
         public override void Update(GameTime gameTime)
         {
             _fighter.Update(gameTime);
