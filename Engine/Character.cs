@@ -22,7 +22,7 @@ namespace Engine
     }
     public abstract class Character
     {
-        public string CurrentStateName { get; protected set; }
+        public string CurrentStateName { get; protected set; } = "idle";
 
         protected Dictionary<string, State> states = new ();
 
@@ -51,7 +51,7 @@ namespace Engine
             this.position = position;
             this.playerIndex = playerIndex;
             this.hitBox = hitBox;   
-            this.dmgBox = dmgBox;   
+            this.dmgBox = dmgBox;
         }
         public Character(Vector2 position, int playerIndex, Direction direction, Rectangle hitBox, Rectangle dmgBox) : this(position, playerIndex, hitBox, dmgBox) 
         {
@@ -91,7 +91,6 @@ namespace Engine
             }
 
             string? newStateName = currentState?.NextStateName(action);
-            Debug.WriteLine(newStateName);
 
             if (newStateName != null)
             {
