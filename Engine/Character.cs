@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,8 @@ namespace Engine
 
     public abstract class Character
     {
+        public string CurrentStateName { get; protected set; }
+
         protected Dictionary<string, State> states = new ();
 
         protected State? currentState;
@@ -31,19 +34,34 @@ namespace Engine
 
         protected Direction direction = Direction.Left;
 
+        public Rectangle hitBox;
 
-        public Character(Vector2 position, int playerIndex)
+        public Rectangle? dmgBox;
+
+        
+        
+
+        public Character(Vector2 position, int playerIndex, Rectangle hitBox, Rectangle dmgBox)
         {
             this.position = position;
             this.playerIndex = playerIndex;
+            this.hitBox = hitBox;   
+            this.dmgBox = dmgBox;   
         }
-        public Character(Vector2 position, int playerIndex, Direction direction) : this(position, playerIndex) 
+        public Character(Vector2 position, int playerIndex, Direction direction, Rectangle hitBox, Rectangle dmgBox) : this(position, playerIndex, hitBox, dmgBox) 
         {
            this.direction = direction;  
         }
 
         public virtual void Update(GameTime gameTime)
         {
+
+            hitBox.X = (int)position.X;
+            hitBox.Y = (int)position.Y; 
+            
+            
+            
+
             //This records the current state of the gamepad in each 
             GamePadState currentGamePadState = GamePad.GetState(playerIndex);
             if (_previousGamePadState != null)
@@ -51,20 +69,29 @@ namespace Engine
                 if (currentGamePadState.IsButtonDown(Buttons.X) && !_previousGamePadState.GetValueOrDefault().IsButtonDown(Buttons.X))
                 {
                     ChangeState("punch");
+                    dmgBox = new Rectangle((int)position.X + 64, (int)position.Y + 32,24,24);
+                    
+
                 }
                 if (currentGamePadState.IsButtonDown(Buttons.X) && _previousGamePadState.GetValueOrDefault().IsButtonDown(Buttons.X))
                 {
                     ChangeState("punch2");
+                    dmgBox = new Rectangle((int)position.X + 64, (int)position.Y + 32, 24, 24);
+                    
                 }
 
             }
             if (currentGamePadState.IsButtonDown(Buttons.Y) && !_previousGamePadState.GetValueOrDefault().IsButtonDown(Buttons.Y))
             {
                 ChangeState("sword");
+                dmgBox = new Rectangle((int)position.X + 64, (int)position.Y + 24, 24, 24);
+                
+
             }
             if (currentGamePadState.IsButtonDown(Buttons.A) && !_previousGamePadState.GetValueOrDefault().IsButtonDown(Buttons.A) && (currentGamePadState.ThumbSticks.Left.X < 0 || currentGamePadState.ThumbSticks.Left.X > 0))
             {
                 ChangeState("moveAtk");
+                
             }
 
 
@@ -74,13 +101,19 @@ namespace Engine
                 position.X -= 5f;
                 direction = Direction.Left;
                 ChangeState("move");
+                dmgBox = null;
             }
             if (currentGamePadState.ThumbSticks.Left.X > 0)
             {
                 position.X += 5f;
                 direction = Direction.Right;
                 ChangeState("move");
+                dmgBox = null;
+
             }
+
+ 
+
             _previousGamePadState = currentGamePadState;
             currentState?.Update(gameTime);
 
@@ -88,6 +121,8 @@ namespace Engine
             {
                 currentState.Reset();
                 currentState = states["idle"];
+                dmgBox = null;
+
             }
 
 
@@ -96,11 +131,13 @@ namespace Engine
 
         public virtual void Draw(GameTime gameTime, SpriteBatch? spriteBatch)
         {
+         
+            
             if (currentState is not null)
             {
                 Rectangle dest = new();
-                dest.X = Convert.ToInt32(position.X);
-                dest.Y = Convert.ToInt32(position.Y);
+                dest.X = (int)position.X;
+                dest.Y = (int)position.Y;
                 dest.Width = currentState.Frame.SourceRectangle.Width * 4;
                 dest.Height = currentState.Frame.SourceRectangle.Height * 4;
 
@@ -119,6 +156,8 @@ namespace Engine
         {
             // implement this so it works
             currentState = states[newStateName];
+            CurrentStateName = newStateName; 
+            
 
         }
     }

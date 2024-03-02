@@ -10,12 +10,12 @@ namespace Engine
 {
     public class Fighter : Character
     {
-        public Fighter(Texture2D t, Vector2 position, int playerIndex) : base(position, playerIndex)
+        public Fighter(Texture2D t, Vector2 position, int playerIndex, Rectangle hitBox, Rectangle dmgBox) : base(position, playerIndex, hitBox, dmgBox)
         {
             Initialize(t);
         }
 
-        public Fighter(Texture2D t, Vector2 position, int playerIndex, Direction direction) : base(position, playerIndex, direction)
+        public Fighter(Texture2D t, Vector2 position, int playerIndex, Direction direction, Rectangle hitBox, Rectangle dmgBox) : base(position, playerIndex, direction, hitBox, dmgBox)
         {
             Initialize(t);
         }
@@ -44,9 +44,6 @@ namespace Engine
             {
                 new AnimationFrame(new Rectangle(0, 128, 64, 64), 100),
 
-
-
-                
             };
             State punchState = new(punchFrames);
             states.Add("punch", punchState);
@@ -86,9 +83,17 @@ namespace Engine
             State moveAtkState = new(moveAtkFrames);
             states.Add("moveAtk", moveAtkState);
 
+            List<AnimationFrame> hitFrames = new()
+            {
+                new AnimationFrame(new Rectangle(192, 192, 64, 64), 50),
+                
+            };
+            State hitState = new(hitFrames);
+            states.Add("hit", hitState);
 
 
-            
+
+
 
             //Current state is the state that the characters begin with
             currentState = idle;
