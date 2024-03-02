@@ -18,7 +18,7 @@ namespace Engine
 
     public enum Action
     {
-        Punch, MoveLeft, MoveRight
+        Punch, MoveLeft, MoveRight, Hit
     }
     public abstract class Character
     {
