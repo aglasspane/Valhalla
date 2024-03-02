@@ -30,38 +30,40 @@ namespace Engine
                 //Each AnimationFrame contains where on the spritesheet we are getting the value from and the time it last for (milliseconds) 
 
                 new AnimationFrame(new Rectangle(0, 0, 64, 64), 500),
-                new AnimationFrame(new Rectangle(64, 0, 64, 64), 1000000000),
+                new AnimationFrame(new Rectangle(64, 0, 64, 64), 100),
                 //new AnimationFrame(new Rectangle(128, 0, 64, 64),750)
             };
 
             //This creates a state which relates to the animation meaning you can use it to change the animation
-            State idle = new(frames);
+            IdleState idle = new(frames);
 
             //This adds the state to the list of states
             states.Add("idle", idle);
 
             List<AnimationFrame> punchFrames = new()
             {
-                new AnimationFrame(new Rectangle(0, 128, 64, 64), 100),
+                new AnimationFrame(new Rectangle(0, 128, 64, 64), 150),
 
+                
             };
-            State punchState = new(punchFrames);
+            Punch1State punchState = new(punchFrames);
             states.Add("punch", punchState);
 
             List<AnimationFrame> punchFrames2 = new()
             {
-                new AnimationFrame(new Rectangle(64, 128, 64, 64), 200),
-                new AnimationFrame(new Rectangle(128, 128, 64, 64), 500),
+                new AnimationFrame(new Rectangle(64, 128, 64, 64), 75),
+                new AnimationFrame(new Rectangle(128, 128, 64, 64), 75),
             };
-            State punchState2 = new(punchFrames2);
+            Punch2State punchState2 = new(punchFrames2);
             states.Add("punch2", punchState2);
 
             List<AnimationFrame> moveFrames = new()
             {
                 new AnimationFrame(new Rectangle(64, 64, 64, 64), 200),
-                new AnimationFrame(new Rectangle(128, 64, 64, 64), 10000),
+                new AnimationFrame(new Rectangle(128, 64, 64, 64), 100),
+
             };
-            State moveState = new(moveFrames);
+            MoveState moveState = new(moveFrames);
             states.Add("move", moveState);
 
             List<AnimationFrame> swordFrames = new()

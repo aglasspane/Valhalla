@@ -16,6 +16,10 @@ namespace Engine
         Left, Right
     }
 
+    public enum Action
+    {
+        Punch, MoveLeft, MoveRight
+    }
     public abstract class Character
     {
         public string CurrentStateName { get; protected set; }
@@ -34,6 +38,7 @@ namespace Engine
 
         protected Direction direction = Direction.Left;
 
+        protected Queue<Action> actionQueue = new();
         public Rectangle hitBox;
 
         public Rectangle? dmgBox;
@@ -64,69 +69,64 @@ namespace Engine
 
             //This records the current state of the gamepad in each 
             GamePadState currentGamePadState = GamePad.GetState(playerIndex);
-            if (_previousGamePadState != null)
+            //Translate Input
+            if (currentGamePadState.IsButtonDown(Buttons.X))
             {
-                if (currentGamePadState.IsButtonDown(Buttons.X) && !_previousGamePadState.GetValueOrDefault().IsButtonDown(Buttons.X))
-                {
-                    ChangeState("punch");
-                    dmgBox = new Rectangle((int)position.X + 64, (int)position.Y + 32,24,24);
-                    
-
-                }
-                if (currentGamePadState.IsButtonDown(Buttons.X) && _previousGamePadState.GetValueOrDefault().IsButtonDown(Buttons.X))
-                {
-                    ChangeState("punch2");
-                    dmgBox = new Rectangle((int)position.X + 64, (int)position.Y + 32, 24, 24);
-                    
-                }
-
-            }
-            if (currentGamePadState.IsButtonDown(Buttons.Y) && !_previousGamePadState.GetValueOrDefault().IsButtonDown(Buttons.Y))
-            {
-                ChangeState("sword");
-                dmgBox = new Rectangle((int)position.X + 64, (int)position.Y + 24, 24, 24);
-                
-
-            }
-            if (currentGamePadState.IsButtonDown(Buttons.A) && !_previousGamePadState.GetValueOrDefault().IsButtonDown(Buttons.A) && (currentGamePadState.ThumbSticks.Left.X < 0 || currentGamePadState.ThumbSticks.Left.X > 0))
-            {
-                ChangeState("moveAtk");
-                
+                    actionQueue.Enqueue(Action.Punch);
             }
 
+            if (currentGamePadState.ThumbSticks.Left.X > 0)
+            {
+                actionQueue.Enqueue(Action.MoveRight);
+            }
+            else if (currentGamePadState.ThumbSticks.Left.X < 0)
+            {
+                actionQueue.Enqueue(Action.MoveLeft);
+            }
 
+            Action? action = null;
+            if (actionQueue.Count > 0) 
+            {
+                action = actionQueue.Dequeue();
+            }
 
-            if (currentGamePadState.ThumbSticks.Left.X < 0)
+            string? newStateName = currentState?.NextStateName(action);
+            Debug.WriteLine(newStateName);
+
+            if (newStateName != null)
+            {
+                currentState?.Reset();
+                ChangeState(newStateName);  
+            }
+
+            if (action == Action.MoveLeft)
             {
                 position.X -= 5f;
                 direction = Direction.Left;
-                ChangeState("move");
                 dmgBox = null;
             }
-            if (currentGamePadState.ThumbSticks.Left.X > 0)
+            if (action == Action.MoveRight)
             {
                 position.X += 5f;
                 direction = Direction.Right;
-                ChangeState("move");
                 dmgBox = null;
 
             }
 
- 
+
+            //if (currentGamePadState.IsButtonDown(Buttons.Y) && !_previousGamePadState.GetValueOrDefault().IsButtonDown(Buttons.Y))
+            //{
+            //    ChangeState("sword");
+            //}
+            //if (currentGamePadState.IsButtonDown(Buttons.A) && !_previousGamePadState.GetValueOrDefault().IsButtonDown(Buttons.A) && (currentGamePadState.ThumbSticks.Left.X < 0 || currentGamePadState.ThumbSticks.Left.X > 0))
+            //{
+            //    ChangeState("moveAtk");
+            //}
+
+
 
             _previousGamePadState = currentGamePadState;
             currentState?.Update(gameTime);
-
-            if (currentState is not null && currentState.Finished)
-            {
-                currentState.Reset();
-                currentState = states["idle"];
-                dmgBox = null;
-
-            }
-
-
-
         }
 
         public virtual void Draw(GameTime gameTime, SpriteBatch? spriteBatch)
