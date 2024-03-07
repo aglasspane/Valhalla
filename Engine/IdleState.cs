@@ -29,6 +29,9 @@ namespace Engine
                 case Action.MoveRight:
                     stateName = "move";
                     break;
+                case Action.Jump:
+                    stateName = "jump";
+                    break;
             }
 
             return stateName;

@@ -21,6 +21,9 @@ namespace Engine
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
+
+            _graphics.PreferredBackBufferHeight = 1024;
+            _graphics.PreferredBackBufferWidth = 2000;   
     
         }
 

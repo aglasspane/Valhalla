@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,7 +19,7 @@ namespace Engine
 
     public enum Action
     {
-        Punch, MoveLeft, MoveRight
+        Punch, MoveLeft, MoveRight, Jump
     }
     public abstract class Character
     {
@@ -43,6 +44,11 @@ namespace Engine
 
         public Rectangle? dmgBox;
 
+        protected bool hasJumped = false;
+
+        protected Vector2 velocity;
+
+
         
         
 
@@ -62,8 +68,8 @@ namespace Engine
         {
 
             hitBox.X = (int)position.X;
-            hitBox.Y = (int)position.Y; 
-            
+            hitBox.Y = (int)position.Y;
+            position += velocity;
             
             
 
@@ -73,6 +79,9 @@ namespace Engine
             if (currentGamePadState.IsButtonDown(Buttons.X))
             {
                     actionQueue.Enqueue(Action.Punch);
+                    dmgBox = new Rectangle((int)position.X + 64, (int)position.Y + 24 , 16, 16);  
+
+
             }
 
             if (currentGamePadState.ThumbSticks.Left.X > 0)
@@ -82,6 +91,10 @@ namespace Engine
             else if (currentGamePadState.ThumbSticks.Left.X < 0)
             {
                 actionQueue.Enqueue(Action.MoveLeft);
+            }
+            if(currentGamePadState.IsButtonDown(Buttons.A))
+            {
+                actionQueue.Enqueue(Action.Jump);
             }
 
             Action? action = null;
@@ -100,17 +113,39 @@ namespace Engine
 
             if (action == Action.MoveLeft)
             {
-                position.X -= 5f;
+                position.X -= 10f;
                 direction = Direction.Left;
                 dmgBox = null;
             }
             if (action == Action.MoveRight)
             {
-                position.X += 5f;
+                position.X += 10f;
                 direction = Direction.Right;
                 dmgBox = null;
-
             }
+            if (action == Action.Jump && hasJumped == false)
+            { 
+                position.Y -= 15f;
+                velocity.Y = -10f;
+                hasJumped = true;  
+            }
+            if(hasJumped == true)
+            {
+                float i = 1;
+                velocity.Y += 0.15f * i;
+               
+            }
+            if(position.Y + 64 > 720)
+            {
+                hasJumped = false;
+            }
+            if (hasJumped == false)
+            {
+                velocity.Y = 0f;
+                
+            }
+
+            
 
 
             //if (currentGamePadState.IsButtonDown(Buttons.Y) && !_previousGamePadState.GetValueOrDefault().IsButtonDown(Buttons.Y))

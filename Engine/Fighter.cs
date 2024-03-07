@@ -93,6 +93,15 @@ namespace Engine
             State hitState = new(hitFrames);
             states.Add("hit", hitState);
 
+            List<AnimationFrame> jumpFrames = new()
+            {
+                new AnimationFrame(new Rectangle(448, 0, 64, 64), 50),
+                new AnimationFrame(new Rectangle(512, 0, 64, 64), 100),
+
+            };
+            JumpState jumpState = new(jumpFrames);
+            states.Add("jump", jumpState);
+
 
 
 
