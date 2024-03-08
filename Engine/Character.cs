@@ -38,10 +38,13 @@ namespace Engine
 
         protected Direction direction = Direction.Left;
 
-        protected Queue<Action> actionQueue = new();
+        public Queue<Action> actionQueue = new();
+
         public Rectangle hitBox;
 
         public Rectangle? dmgBox;
+
+        public double percentDmgValue { get; protected set; } = 0;
 
         
         
@@ -73,6 +76,7 @@ namespace Engine
             if (currentGamePadState.IsButtonDown(Buttons.X))
             {
                     actionQueue.Enqueue(Action.Punch);
+                dmgBox = new Rectangle((int)position.X + 64, (int)position.Y + 32, 24, 24);
             }
 
             if (currentGamePadState.ThumbSticks.Left.X > 0)
@@ -95,7 +99,9 @@ namespace Engine
             if (newStateName != null)
             {
                 currentState?.Reset();
+                dmgBox = null;
                 ChangeState(newStateName);  
+
             }
 
             if (action == Action.MoveLeft)
@@ -111,6 +117,10 @@ namespace Engine
                 dmgBox = null;
 
             }
+            if (action == Action.Hit)
+            {
+                percentDmgValue = percentDmgValue + 0.1f;   
+            }
 
 
             //if (currentGamePadState.IsButtonDown(Buttons.Y) && !_previousGamePadState.GetValueOrDefault().IsButtonDown(Buttons.Y))
@@ -122,7 +132,7 @@ namespace Engine
             //    ChangeState("moveAtk");
             //}
 
-
+            
 
             _previousGamePadState = currentGamePadState;
             currentState?.Update(gameTime);

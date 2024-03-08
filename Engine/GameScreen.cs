@@ -18,6 +18,8 @@ namespace Engine
         protected Character _fighter2;
         private readonly CollisionManager cm = new CollisionManager();
 
+        public SpriteFont? font { get; set; }
+
 
         public GameScreen(Texture2D t, Texture2D t2) : base(t, t2)
         { 
@@ -31,6 +33,12 @@ namespace Engine
         {
             _fighter.Draw(gameTime, gd);
             _fighter2.Draw(gameTime, gd);
+
+            if(font != null) 
+            {
+                gd?.DrawString(font, Convert.ToInt32(_fighter.percentDmgValue).ToString(), new Vector2(100, 300), Color.Red);
+                gd?.DrawString(font, Convert.ToInt32(_fighter2.percentDmgValue).ToString(), new Vector2(300, 300), Color.Red);
+            }
 
             base.Draw(gameTime, gd);
         }

@@ -87,10 +87,10 @@ namespace Engine
 
             List<AnimationFrame> hitFrames = new()
             {
-                new AnimationFrame(new Rectangle(192, 192, 64, 64), 50),
+                new AnimationFrame(new Rectangle(192, 192, 64, 64), 500),
                 
             };
-            State hitState = new(hitFrames);
+            HitState hitState = new(hitFrames);
             states.Add("hit", hitState);
 
 
