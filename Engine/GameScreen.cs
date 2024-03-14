@@ -36,8 +36,8 @@ namespace Engine
 
             if(font != null) 
             {
-                gd?.DrawString(font, Convert.ToInt32(_fighter.percentDmgValue).ToString(), new Vector2(100, 300), Color.Red);
-                gd?.DrawString(font, Convert.ToInt32(_fighter2.percentDmgValue).ToString(), new Vector2(300, 300), Color.Red);
+                gd?.DrawString(font, Convert.ToInt32(_fighter.percentDmgValue).ToString() + "%" , new Vector2(100, 300), Color.Red);
+                gd?.DrawString(font, Convert.ToInt32(_fighter2.percentDmgValue).ToString() + "%", new Vector2(300, 300), Color.Red);
             }
 
             base.Draw(gameTime, gd);

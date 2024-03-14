@@ -22,6 +22,7 @@ namespace Engine
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
+
     
         }
 
