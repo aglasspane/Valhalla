@@ -21,7 +21,7 @@ namespace Engine
     {
         Punch, MoveLeft, MoveRight, Jump
     }
-    public abstract class Character
+    public abstract class Character : Moveable
     {
         public string CurrentStateName { get; protected set; } = "idle";
 
@@ -31,22 +31,19 @@ namespace Engine
 
         protected Texture2D? spriteSheet;
 
-        protected Vector2 position;
-
         protected GamePadState? _previousGamePadState = null;
 
         protected int playerIndex;
 
-        protected Direction direction = Direction.Left;
-
         protected Queue<Action> actionQueue = new();
+
         public Rectangle hitBox;
 
         public Rectangle? dmgBox;
 
         protected bool hasJumped = false;
 
-        protected Vector2 velocity;
+        
 
 
         
@@ -54,22 +51,22 @@ namespace Engine
 
         public Character(Vector2 position, int playerIndex, Rectangle hitBox, Rectangle dmgBox)
         {
-            this.position = position;
+            this.Position = position;
             this.playerIndex = playerIndex;
             this.hitBox = hitBox;   
             this.dmgBox = dmgBox;
         }
         public Character(Vector2 position, int playerIndex, Direction direction, Rectangle hitBox, Rectangle dmgBox) : this(position, playerIndex, hitBox, dmgBox) 
         {
-           this.direction = direction;  
+           this.Direction = direction;  
         }
 
-        public virtual void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
 
-            hitBox.X = (int)position.X;
-            hitBox.Y = (int)position.Y;
-            position += velocity;
+            hitBox.X = (int)Position.X;
+            hitBox.Y = (int)Position.Y;
+            
             
             
 
@@ -79,9 +76,7 @@ namespace Engine
             if (currentGamePadState.IsButtonDown(Buttons.X))
             {
                     actionQueue.Enqueue(Action.Punch);
-                    dmgBox = new Rectangle((int)position.X + 64, (int)position.Y + 24 , 16, 16);  
-
-
+                    dmgBox = new Rectangle((int)Position.X + 64, (int)Position.Y + 24 , 16, 16);  
             }
 
             if (currentGamePadState.ThumbSticks.Left.X > 0)
@@ -103,7 +98,7 @@ namespace Engine
                 action = actionQueue.Dequeue();
             }
 
-            string? newStateName = currentState?.NextStateName(action);
+            string? newStateName = currentState?.NextStateName(action, this);
 
             if (newStateName != null)
             {
@@ -111,41 +106,13 @@ namespace Engine
                 ChangeState(newStateName);  
             }
 
-            if (action == Action.MoveLeft)
+            if (newStateName == "idle")
             {
-                position.X -= 10f;
-                direction = Direction.Left;
                 dmgBox = null;
-            }
-            if (action == Action.MoveRight)
-            {
-                position.X += 10f;
-                direction = Direction.Right;
-                dmgBox = null;
-            }
-            if (action == Action.Jump && hasJumped == false)
-            { 
-                position.Y -= 15f;
-                velocity.Y = -10f;
-                hasJumped = true;  
-            }
-            if(hasJumped == true)
-            {
-                float i = 1;
-                velocity.Y += 0.15f * i;
-               
-            }
-            if(position.Y + 64 > 720)
-            {
-                hasJumped = false;
-            }
-            if (hasJumped == false)
-            {
-                velocity.Y = 0f;
-                
             }
 
-            
+
+
 
 
             //if (currentGamePadState.IsButtonDown(Buttons.Y) && !_previousGamePadState.GetValueOrDefault().IsButtonDown(Buttons.Y))
@@ -160,7 +127,9 @@ namespace Engine
 
 
             _previousGamePadState = currentGamePadState;
-            currentState?.Update(gameTime);
+            currentState?.Update(gameTime, this);
+
+            base.Update(gameTime);
         }
 
         public virtual void Draw(GameTime gameTime, SpriteBatch? spriteBatch)
@@ -170,13 +139,13 @@ namespace Engine
             if (currentState is not null)
             {
                 Rectangle dest = new();
-                dest.X = (int)position.X;
-                dest.Y = (int)position.Y;
+                dest.X = (int)Position.X;
+                dest.Y = (int)Position.Y;
                 dest.Width = currentState.Frame.SourceRectangle.Width * 4;
                 dest.Height = currentState.Frame.SourceRectangle.Height * 4;
 
                 SpriteEffects spriteEffects = SpriteEffects.None;   
-                if (direction == Direction.Left)
+                if (Direction == Direction.Left)
                 {
                     spriteEffects = SpriteEffects.FlipHorizontally;
                 }

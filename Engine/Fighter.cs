@@ -97,6 +97,7 @@ namespace Engine
             {
                 new AnimationFrame(new Rectangle(448, 0, 64, 64), 50),
                 new AnimationFrame(new Rectangle(512, 0, 64, 64), 100),
+                new AnimationFrame(new Rectangle(448, 0, 64, 64), 50),
 
             };
             JumpState jumpState = new(jumpFrames);

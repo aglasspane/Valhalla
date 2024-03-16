@@ -15,21 +15,21 @@ namespace Engine
 
         public bool Finished { get; protected set; } = false;
 
-        public bool Loopable { get; protected set; } = true;   
-        
+        public bool Loopable { get; protected set; } = true;
+
         protected List<AnimationFrame> frames;
 
         protected int _currentFrameTime = 0;
         protected int _currentFrameNumber = 0;
 
 
-        public State(List<AnimationFrame> framesw) 
+        public State(List<AnimationFrame> framesw)
         {
             frames = framesw;
             Frame = frames[_currentFrameNumber];
         }
 
-        public void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime, Moveable moveable)
         {
             _currentFrameTime += gameTime.ElapsedGameTime.Milliseconds;
 
@@ -44,25 +44,31 @@ namespace Engine
                     }
                     else
                     {
-                        _currentFrameNumber--;    
+                        _currentFrameNumber--;
                     }
                     Finished = true;
                 }
                 _currentFrameTime = 0;
                 Frame = frames[_currentFrameNumber];
             }
-            
+
         }
-        public virtual string? NextStateName (Action? currentAction)
+        public virtual string? NextStateName(Action? currentAction)
         {
             return null;
         }
 
+        public virtual string? NextStateName(Action? currentAction, Moveable moveable)
+        {
+            return NextStateName(currentAction);
+        }
+      
         public void Reset()
         {
             _currentFrameTime = 0;
             _currentFrameNumber = 0;
             Finished = false;
+            Frame = frames[_currentFrameNumber];
         }
     }
 }

@@ -16,8 +16,7 @@ namespace Engine
         private Screen? _activeScreen;
         private Texture2D? _myWhiteBox;
 
-        private Renderer? _renderer;
-
+        
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -38,7 +37,7 @@ namespace Engine
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            _renderer = new Renderer(GraphicsDevice, _spriteBatch);
+          
 
             _myWhiteBox = new Texture2D(GraphicsDevice, 1, 1);
             _myWhiteBox.SetData(new[] { Color.White });

@@ -20,7 +20,6 @@ namespace Engine
             if (c1.CurrentStateName != "hit" && c1.dmgBox.GetValueOrDefault(new Rectangle(0, 0, 0, 0)).Intersects(c2.hitBox))
             {
                 c2.ChangeState("hit");
-
             }
       
 
