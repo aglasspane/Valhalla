@@ -19,7 +19,7 @@ namespace Engine
 
     public enum Action
     {
-        Punch, MoveLeft, MoveRight, Jump
+        Punch, MoveLeft, MoveRight, Jump, Hit
     }
     public abstract class Character : Moveable
     {
@@ -41,10 +41,7 @@ namespace Engine
 
         public Rectangle? dmgBox;
 
-        protected bool hasJumped = false;
-
-        
-
+        public double percentDmgValue { get; protected set; } = 0;
 
         
         
@@ -103,7 +100,9 @@ namespace Engine
             if (newStateName != null)
             {
                 currentState?.Reset();
+                dmgBox = null;
                 ChangeState(newStateName);  
+
             }
 
             if (newStateName == "idle")
@@ -113,6 +112,11 @@ namespace Engine
 
 
 
+            }
+            if (action == Action.Hit)
+            {
+                percentDmgValue = percentDmgValue + 0.1f;   
+            }
 
 
             //if (currentGamePadState.IsButtonDown(Buttons.Y) && !_previousGamePadState.GetValueOrDefault().IsButtonDown(Buttons.Y))
@@ -124,7 +128,7 @@ namespace Engine
             //    ChangeState("moveAtk");
             //}
 
-
+            
 
             _previousGamePadState = currentGamePadState;
             currentState?.Update(gameTime, this);

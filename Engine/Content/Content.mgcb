@@ -25,3 +25,13 @@
 /processorParam:TextureFormat=Color
 /build:Char_1.png;Man
 
+#begin Fighting Spirit 2.otf
+/copy:Fighting Spirit 2.otf
+
+#begin GameFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:GameFont.spritefont
+
