@@ -1,2 +1,4 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
 "C:/Users/thoma/source/repos/New folder/Engine/Content/Char_1.png","C:/Users/thoma/source/repos/New folder/Engine/Content/bin/DesktopGL/Content/Man.xnb","TextureProcessor","Texture2DContent",52815,4718677,0.6300417
+"C:/Users/thoma/source/repos/New folder/Engine/Content/Fighting Spirit 2.otf","C:\Users\thoma\source\repos\New folder\Engine\Content\bin\DesktopGL\Content\Fighting Spirit 2.otf","CopyItem","File",73008,73008,0.0184228
+"C:/Users/thoma/source/repos/New folder/Engine/Content/GameFont.spritefont","C:/Users/thoma/source/repos/New folder/Engine/Content/bin/DesktopGL/Content/GameFont.xnb","FontDescriptionProcessor","SpriteFontContent",2080,529439,0.7273531

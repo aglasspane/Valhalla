@@ -15,12 +15,14 @@ namespace Engine
         private Dictionary<string, Screen> _screens = new Dictionary<string, Screen>();
         private Screen? _activeScreen;
         private Texture2D? _myWhiteBox;
+        private SpriteFont? gameFont;
 
         private Renderer? _renderer;
 
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
+
     
         }
 
@@ -37,6 +39,8 @@ namespace Engine
 
             _renderer = new Renderer(GraphicsDevice, _spriteBatch);
 
+            
+
             _myWhiteBox = new Texture2D(GraphicsDevice, 1, 1);
             _myWhiteBox.SetData(new[] { Color.White });
 
@@ -47,8 +51,9 @@ namespace Engine
             Content.RootDirectory = "Content";
             Texture2D spritesheet = Content.Load<Texture2D>("Man");
             Texture2D anotherSpritesheet = Content.Load<Texture2D>("Man");
+            gameFont = Content.Load<SpriteFont>("GameFont");
 
-            _screens.Add("GameScreen", new GameScreen(spritesheet, anotherSpritesheet));
+            _screens.Add("GameScreen", new GameScreen(spritesheet, anotherSpritesheet) { font = gameFont });
             ChangeActiveScreen("GameScreen");
 
 
