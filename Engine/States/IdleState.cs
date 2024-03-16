@@ -30,7 +30,7 @@ namespace Engine.States
                     stateName = "move";
                     break;
                 case Action.Jump:
-                    stateName = "jump";
+                    stateName = "jumpStart";
                     break;
             }
 

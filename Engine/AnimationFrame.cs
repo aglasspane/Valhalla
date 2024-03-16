@@ -14,6 +14,12 @@ namespace Engine
 
         public int FrameInterval { get; } = 1000;
 
+        public AnimationFrame(int spriteCol, int spriteRow, int frameInterval)
+        {
+            SourceRectangle = new Rectangle(spriteCol * 64, spriteRow * 64, 64, 64);
+            FrameInterval = frameInterval;
+        }
+
         public AnimationFrame(Rectangle source, int frameInterval) 
         { 
             //These are the parameters for the AnimationFrames
