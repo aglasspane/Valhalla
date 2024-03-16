@@ -35,7 +35,7 @@ namespace Engine
 
         protected int playerIndex;
 
-        protected Queue<Action> actionQueue = new();
+        public Queue<Action> actionQueue = new();
 
         public Rectangle hitBox;
 
@@ -112,7 +112,7 @@ namespace Engine
 
 
 
-            }
+            
             if (action == Action.Hit)
             {
                 percentDmgValue = percentDmgValue + 0.1f;   
