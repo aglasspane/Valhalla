@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Engine.States;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -101,7 +102,9 @@ namespace Engine
             {
                 currentState?.Reset();
                 dmgBox = null;
-                ChangeState(newStateName);  
+                ChangeState(newStateName);
+                currentState?.Start(gameTime, this);
+                Debug.WriteLine(newStateName);
 
             }
 
@@ -163,9 +166,7 @@ namespace Engine
         {
             // implement this so it works
             currentState = states[newStateName];
-            CurrentStateName = newStateName; 
-            
-
+            CurrentStateName = newStateName;
         }
     }
 }

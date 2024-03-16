@@ -20,6 +20,8 @@ namespace Engine
 
         public Direction Direction { get; set; } = Direction.Left;
 
+        public bool InAir { get; protected set; } = false;
+
         public virtual void Update(GameTime gameTime)
         {
             Position += Velocity;
@@ -32,6 +34,11 @@ namespace Engine
             if (Position.Y >= 784)
             {
                 Position = new(Position.X, 784);
+                InAir = false;
+            }
+            else
+            {
+                InAir = true;
             }
         }
     }

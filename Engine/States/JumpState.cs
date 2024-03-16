@@ -6,11 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Engine
+namespace Engine.States
 {
-    internal class JumpState : State    
+    internal class JumpState : State
     {
-        private bool _isJumping = false;    
+        private bool _isJumping = false;
         public JumpState(List<AnimationFrame> framesw) : base(framesw)
         {
             Loopable = false;
@@ -24,18 +24,22 @@ namespace Engine
             {
                 _isJumping = true;
                 moveable.Velocity = new Vector2(moveable.Velocity.X, -12.5f);
-                Debug.WriteLine("I am jumping");
+                
             }
         }
 
         public override string? NextStateName(Action? currentAction, Moveable moveable)
         {
             string? stateName = null;
-            if (Finished && moveable.Position.Y + 64 > 720)
+            if (!moveable.InAir && Finished)
             {
-                stateName = "idle";
+                stateName = "jumpLand";
                 _isJumping = false;
-                Debug.WriteLine("I am on the floor");
+                
+            }
+            else if (moveable.InAir && (currentAction == Action.MoveLeft || currentAction == Action.MoveRight))
+            {
+                stateName = "jumpMove";
             }
 
 

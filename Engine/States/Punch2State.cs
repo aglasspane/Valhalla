@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Engine
+namespace Engine.States
 {
-    internal class Punch1State : State
+    internal class Punch2State : State
     {
-        public Punch1State(List<AnimationFrame> framesw) : base(framesw)
+        public Punch2State(List<AnimationFrame> framesw) : base(framesw)
         {
 
 
@@ -19,13 +19,13 @@ namespace Engine
             string? stateName = null;
             if (currentAction == Action.Punch && Finished)
             {
-                stateName = "punch2";
+                stateName = "punch";
             }
             else if (Finished)
             {
                 stateName = "idle";
             }
-            
+
             return stateName;
 
         }

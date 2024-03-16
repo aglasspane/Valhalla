@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Engine.States;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -102,6 +103,21 @@ namespace Engine
             };
             JumpState jumpState = new(jumpFrames);
             states.Add("jump", jumpState);
+
+            List<AnimationFrame> jumpMoveFrames = new()
+            {
+                new AnimationFrame(new Rectangle(64, 64, 64, 64), 200),
+            };
+            JumpMoveState jumpMoveState = new(jumpMoveFrames);
+            states.Add("jumpMove", jumpMoveState);
+
+            List<AnimationFrame> jumpLandFrames = new()
+            {
+                new AnimationFrame(new Rectangle(768, 0, 64, 64), 100),
+            };
+            JumpLandState jumpLandState = new(jumpLandFrames);
+            states.Add("jumpLand", jumpLandState);
+
 
 
 

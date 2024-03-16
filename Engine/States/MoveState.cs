@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Engine
+namespace Engine.States
 {
     internal class MoveState : State
     {
@@ -23,7 +23,7 @@ namespace Engine
             float newX = moveable.Position.X;
             if (_direction == Direction.Left)
             {
-                newX -= _movementDistance; 
+                newX -= _movementDistance;
             }
             else if (_direction == Direction.Right)
             {
@@ -31,7 +31,7 @@ namespace Engine
             }
             moveable.Position = new Vector2(newX, moveable.Position.Y);
             moveable.Direction = _direction;
-            
+
         }
 
         public override string? NextStateName(Action? currentAction)
@@ -39,11 +39,11 @@ namespace Engine
             string? stateName = null;
             if (currentAction == Action.MoveLeft)
             {
-                _direction = Direction.Left;    
+                _direction = Direction.Left;
             }
-            else if (currentAction == Action.MoveRight) 
+            else if (currentAction == Action.MoveRight)
             {
-                _direction = Direction.Right;   
+                _direction = Direction.Right;
             }
 
             if (Finished && currentAction != Action.MoveLeft && currentAction != Action.MoveRight)

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Engine
+namespace Engine.States
 {
     public class State
     {
@@ -29,11 +29,16 @@ namespace Engine
             Frame = frames[_currentFrameNumber];
         }
 
+        public virtual void Start(GameTime gameTime, Moveable moveable)
+        {
+
+        }
+
         public virtual void Update(GameTime gameTime, Moveable moveable)
         {
             _currentFrameTime += gameTime.ElapsedGameTime.Milliseconds;
 
-            if (_currentFrameTime >= frames[_currentFrameNumber].FrameInterval && (Loopable || (!Loopable && !Finished)))
+            if (_currentFrameTime >= frames[_currentFrameNumber].FrameInterval && (Loopable || !Loopable && !Finished))
             {
                 _currentFrameNumber++;
                 if (_currentFrameNumber > frames.Count - 1)
@@ -62,7 +67,7 @@ namespace Engine
         {
             return NextStateName(currentAction);
         }
-      
+
         public void Reset()
         {
             _currentFrameTime = 0;
