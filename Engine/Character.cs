@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,9 +19,9 @@ namespace Engine
 
     public enum Action
     {
-        Punch, MoveLeft, MoveRight, Hit
+        Punch, MoveLeft, MoveRight, Jump, Hit
     }
-    public abstract class Character
+    public abstract class Character : Moveable
     {
         public string CurrentStateName { get; protected set; } = "idle";
 
@@ -30,13 +31,9 @@ namespace Engine
 
         protected Texture2D? spriteSheet;
 
-        protected Vector2 position;
-
         protected GamePadState? _previousGamePadState = null;
 
         protected int playerIndex;
-
-        protected Direction direction = Direction.Left;
 
         public Queue<Action> actionQueue = new();
 
@@ -51,21 +48,21 @@ namespace Engine
 
         public Character(Vector2 position, int playerIndex, Rectangle hitBox, Rectangle dmgBox)
         {
-            this.position = position;
+            this.Position = position;
             this.playerIndex = playerIndex;
             this.hitBox = hitBox;   
             this.dmgBox = dmgBox;
         }
         public Character(Vector2 position, int playerIndex, Direction direction, Rectangle hitBox, Rectangle dmgBox) : this(position, playerIndex, hitBox, dmgBox) 
         {
-           this.direction = direction;  
+           this.Direction = direction;  
         }
 
-        public virtual void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
 
-            hitBox.X = (int)position.X;
-            hitBox.Y = (int)position.Y; 
+            hitBox.X = (int)Position.X;
+            hitBox.Y = (int)Position.Y;
             
             
             
@@ -76,7 +73,7 @@ namespace Engine
             if (currentGamePadState.IsButtonDown(Buttons.X))
             {
                     actionQueue.Enqueue(Action.Punch);
-                dmgBox = new Rectangle((int)position.X + 64, (int)position.Y + 32, 24, 24);
+                    dmgBox = new Rectangle((int)Position.X + 64, (int)Position.Y + 24 , 16, 16);  
             }
 
             if (currentGamePadState.ThumbSticks.Left.X > 0)
@@ -87,6 +84,10 @@ namespace Engine
             {
                 actionQueue.Enqueue(Action.MoveLeft);
             }
+            if(currentGamePadState.IsButtonDown(Buttons.A))
+            {
+                actionQueue.Enqueue(Action.Jump);
+            }
 
             Action? action = null;
             if (actionQueue.Count > 0) 
@@ -94,7 +95,7 @@ namespace Engine
                 action = actionQueue.Dequeue();
             }
 
-            string? newStateName = currentState?.NextStateName(action);
+            string? newStateName = currentState?.NextStateName(action, this);
 
             if (newStateName != null)
             {
@@ -104,19 +105,14 @@ namespace Engine
 
             }
 
-            if (action == Action.MoveLeft)
+            if (newStateName == "idle")
             {
-                position.X -= 5f;
-                direction = Direction.Left;
                 dmgBox = null;
             }
-            if (action == Action.MoveRight)
-            {
-                position.X += 5f;
-                direction = Direction.Right;
-                dmgBox = null;
 
-            }
+
+
+            
             if (action == Action.Hit)
             {
                 percentDmgValue = percentDmgValue + 0.1f;   
@@ -135,7 +131,9 @@ namespace Engine
             
 
             _previousGamePadState = currentGamePadState;
-            currentState?.Update(gameTime);
+            currentState?.Update(gameTime, this);
+
+            base.Update(gameTime);
         }
 
         public virtual void Draw(GameTime gameTime, SpriteBatch? spriteBatch)
@@ -145,13 +143,13 @@ namespace Engine
             if (currentState is not null)
             {
                 Rectangle dest = new();
-                dest.X = (int)position.X;
-                dest.Y = (int)position.Y;
+                dest.X = (int)Position.X;
+                dest.Y = (int)Position.Y;
                 dest.Width = currentState.Frame.SourceRectangle.Width * 4;
                 dest.Height = currentState.Frame.SourceRectangle.Height * 4;
 
                 SpriteEffects spriteEffects = SpriteEffects.None;   
-                if (direction == Direction.Left)
+                if (Direction == Direction.Left)
                 {
                     spriteEffects = SpriteEffects.FlipHorizontally;
                 }
