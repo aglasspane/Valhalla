@@ -10,7 +10,7 @@ namespace Engine
 {
     public class MainMenu : MenuScreen
     {
-        public MainMenu(Texture2D t, Texture2D t2) : base(t, t2) 
+        public MainMenu(GraphicsDevice d, Texture2D t, Texture2D t2) : base(d, t, t2)
         {
         
         }

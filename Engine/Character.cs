@@ -20,7 +20,7 @@ namespace Engine
 
     public enum Action
     {
-        Punch, MoveLeft, MoveRight, Jump, Hit
+        Punch, MoveLeft, MoveRight, Jump, Hit, HighKick
     }
     public abstract class Character : Moveable
     {
@@ -38,9 +38,9 @@ namespace Engine
 
         public Queue<Action> actionQueue = new();
 
-        public Rectangle hitBox;
+        //public Rectangle hitBox;
 
-        public Rectangle? dmgBox;
+        //public Rectangle? dmgBox;
 
         public double percentDmgValue { get; protected set; } = 0;
 
@@ -51,8 +51,8 @@ namespace Engine
         {
             this.Position = position;
             this.playerIndex = playerIndex;
-            this.hitBox = hitBox;   
-            this.dmgBox = dmgBox;
+            //this.hitBox = hitBox;   
+            //this.dmgBox = dmgBox;
         }
         public Character(Vector2 position, int playerIndex, Direction direction, Rectangle hitBox, Rectangle dmgBox) : this(position, playerIndex, hitBox, dmgBox) 
         {
@@ -62,32 +62,41 @@ namespace Engine
         public override void Update(GameTime gameTime)
         {
 
-            hitBox.X = (int)Position.X;
-            hitBox.Y = (int)Position.Y;
+            //hitBox.X = (int)Position.X;
+            //hitBox.Y = (int)Position.Y;
             
             
             
 
             //This records the current state of the gamepad in each 
             GamePadState currentGamePadState = GamePad.GetState(playerIndex);
+            KeyboardState currentKeyboardState = Keyboard.GetState();
+            
+
+            
+        
             //Translate Input
-            if (currentGamePadState.IsButtonDown(Buttons.X))
+            if (currentGamePadState.IsButtonDown(Buttons.X) || currentKeyboardState.IsKeyDown(Keys.E))
             {
                     actionQueue.Enqueue(Action.Punch);
-                    dmgBox = new Rectangle((int)Position.X + 64, (int)Position.Y + 24 , 16, 16);  
+                    //dmgBox = new Rectangle((int)Position.X + 64, (int)Position.Y + 24 , 16, 16);  
             }
 
-            if (currentGamePadState.ThumbSticks.Left.X > 0)
+            if (currentGamePadState.ThumbSticks.Left.X > 0 || currentKeyboardState.IsKeyDown(Keys.D))
             {
                 actionQueue.Enqueue(Action.MoveRight);
             }
-            else if (currentGamePadState.ThumbSticks.Left.X < 0)
+            else if (currentGamePadState.ThumbSticks.Left.X < 0 || currentKeyboardState.IsKeyDown(Keys.A))
             {
                 actionQueue.Enqueue(Action.MoveLeft);
             }
-            if(currentGamePadState.IsButtonDown(Buttons.A))
+            if(currentGamePadState.IsButtonDown(Buttons.A) || currentKeyboardState.IsKeyDown(Keys.Space))
             {
                 actionQueue.Enqueue(Action.Jump);
+            }
+            if(currentGamePadState.IsButtonDown(Buttons.Y) || currentKeyboardState.IsKeyDown(Keys.R)) 
+            {
+                actionQueue.Enqueue(Action.HighKick);   
             }
 
             Action? action = null;
@@ -101,25 +110,25 @@ namespace Engine
             if (newStateName != null)
             {
                 currentState?.Reset();
-                dmgBox = null;
+                //dmgBox = null;
                 ChangeState(newStateName);
                 currentState?.Start(gameTime, this);
                 Debug.WriteLine(newStateName);
 
             }
 
-            if (newStateName == "idle")
-            {
-                dmgBox = null;
-            }
+            //if (newStateName == "idle")
+            //{
+            //    dmgBox = null;
+            //}
 
 
 
             
-            if (action == Action.Hit)
-            {
-                percentDmgValue = percentDmgValue + 0.1f;   
-            }
+            //if (action == Action.Hit)
+            //{
+            //    percentDmgValue = percentDmgValue + 0.1f;   
+            //}
 
 
             //if (currentGamePadState.IsButtonDown(Buttons.Y) && !_previousGamePadState.GetValueOrDefault().IsButtonDown(Buttons.Y))
@@ -139,7 +148,7 @@ namespace Engine
             base.Update(gameTime);
         }
 
-        public virtual void Draw(GameTime gameTime, SpriteBatch? spriteBatch)
+        public override void Draw(GameTime gameTime, SpriteBatch? spriteBatch)
         {
          
             
@@ -148,8 +157,8 @@ namespace Engine
                 Rectangle dest = new();
                 dest.X = (int)Position.X;
                 dest.Y = (int)Position.Y;
-                dest.Width = currentState.Frame.SourceRectangle.Width * 4;
-                dest.Height = currentState.Frame.SourceRectangle.Height * 4;
+                dest.Width = currentState.Frame.SourceRectangle.Width * Scale;
+                dest.Height = currentState.Frame.SourceRectangle.Height * Scale;
 
                 SpriteEffects spriteEffects = SpriteEffects.None;   
                 if (Direction == Direction.Left)

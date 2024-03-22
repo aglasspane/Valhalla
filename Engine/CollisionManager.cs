@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,24 +10,50 @@ namespace Engine
 {
     internal class CollisionManager
     {
-        public void HandleHit(Character c1, Character c2)
-        {
-            if (c2.CurrentStateName != "hit" && c2.dmgBox.HasValue && c2.dmgBox.Value.Intersects(c1.hitBox))
-            {
+        
+        //public void HandleHit(Character c1, Character c2)
+        //{
+        //    if (c2.CurrentStateName != "hit" && c2.dmgBox.HasValue && c2.dmgBox.Value.Intersects(c1.hitBox))
+        //    {
                     
-                c1.actionQueue.Enqueue(Action.Hit);
-                c1.ChangeState("hit");
-            }
+        //        c1.actionQueue.Enqueue(Action.Hit);
+        //        c1.ChangeState("hit");
+        //    }
    
-            if (c1.CurrentStateName != "hit" && c1.dmgBox.HasValue && c1.dmgBox.Value.Intersects(c2.hitBox))
-            {
+        //    if (c1.CurrentStateName != "hit" && c1.dmgBox.HasValue && c1.dmgBox.Value.Intersects(c2.hitBox))
+        //    {
 
-                c2.actionQueue.Enqueue(Action.Hit);
-                c2.ChangeState("hit");
-            }
+        //        c2.actionQueue.Enqueue(Action.Hit);
+        //        c2.ChangeState("hit");
+        //    }
 
       
 
+
+        //}
+
+        public void HandleCollisons (List<Moveable> gameEntities)
+        {
+            Queue<Collider> gameEntityColliders = new();
+            foreach (var entity in gameEntities) 
+            {
+                foreach (var item in entity.Colliders)
+                {
+                    gameEntityColliders.Enqueue(item);
+                }
+                
+            }
+            while(gameEntityColliders.Count > 1)
+            {
+                Collider c = gameEntityColliders.Dequeue();
+                foreach (var item in gameEntityColliders)
+                {
+                    if (c.hasCollided(item) && item.Owner != null)
+                    {
+                        c.handleCollision(item.Owner);
+                    }
+                }
+            }
 
         }
 

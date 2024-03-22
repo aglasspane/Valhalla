@@ -30,9 +30,9 @@ namespace Engine
             {
                 //Each AnimationFrame contains where on the spritesheet we are getting the value from and the time it last for (milliseconds) 
 
-                new AnimationFrame(new Rectangle(0, 0, 64, 64), 500),
-                new AnimationFrame(new Rectangle(64, 0, 64, 64), 100),
-                //new AnimationFrame(new Rectangle(128, 0, 64, 64),750)
+                new AnimationFrame(0, 0, 500),
+                new AnimationFrame(1, 0, 100),
+                
             };
 
             //This creates a state which relates to the animation meaning you can use it to change the animation
@@ -110,21 +110,29 @@ namespace Engine
 
             List<AnimationFrame> jumpMoveFrames = new()
             {
-                new AnimationFrame(new Rectangle(64, 64, 64, 64), 200),
+                new AnimationFrame(1, 1, 200),
             };
             JumpMoveState jumpMoveState = new(jumpMoveFrames);
             states.Add("jumpMove", jumpMoveState);
 
             List<AnimationFrame> jumpLandFrames = new()
             {
-                new AnimationFrame(new Rectangle(768, 0, 64, 64), 200),
+                new AnimationFrame(12, 0 , 200),
             };
             JumpLandState jumpLandState = new(jumpLandFrames);
             states.Add("jumpLand", jumpLandState);
 
-            
+            List<AnimationFrame> highKickFrames = new()
+            {
+                new AnimationFrame(9, 2, 200),
+                new AnimationFrame(8, 2, 400),
+            };
+            HighKickState highKickState = new(highKickFrames);
+            states.Add("highKick", highKickState);
 
 
+            //The hitbox for the player
+            Colliders.Add(new HitCollider(this, new Rectangle(16, 0, 32, 64)));
 
 
             //Current state is the state that the characters begin with

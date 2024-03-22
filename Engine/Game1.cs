@@ -45,7 +45,7 @@ namespace Engine
             _myWhiteBox = new Texture2D(GraphicsDevice, 1, 1);
             _myWhiteBox.SetData(new[] { Color.White });
 
-            _screens.Add("MainMenu", new MainMenu(_myWhiteBox, new Texture2D(GraphicsDevice, 1, 1)));
+            _screens.Add("MainMenu", new MainMenu(GraphicsDevice, _myWhiteBox, new Texture2D(GraphicsDevice, 1, 1)));
             // TODO: use this.Content to load your game content here
             //ChangeActiveScreen("MainMenu");
 
@@ -54,7 +54,7 @@ namespace Engine
             Texture2D anotherSpritesheet = Content.Load<Texture2D>("Man");
             gameFont = Content.Load<SpriteFont>("GameFont");
 
-            _screens.Add("GameScreen", new GameScreen(spritesheet, anotherSpritesheet) { font = gameFont });
+            _screens.Add("GameScreen", new GameScreen(GraphicsDevice ,spritesheet, anotherSpritesheet) { Font = gameFont });
             ChangeActiveScreen("GameScreen");
 
 

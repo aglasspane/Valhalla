@@ -12,9 +12,14 @@ namespace Engine
     {
         protected Texture2D _box;
         protected Texture2D _player2;
+        protected Texture2D _solidColor;
+        protected GraphicsDevice _device;
    
-        public Screen(Texture2D box, Texture2D player2) 
+        public Screen(GraphicsDevice device, Texture2D box, Texture2D player2) 
         {
+            _device = device;   
+            _solidColor = new Texture2D(_device, 1, 1);
+            _solidColor.SetData(new[] { Color.White });
             _box = box;
             _player2 = player2;
         }
@@ -31,7 +36,7 @@ namespace Engine
 
         protected void DrawRectangle(SpriteBatch sb, int x, int y, int width, int height, Color c)
         {
-            sb.Draw(_box, new Rectangle(x, y, width, height), c);
+            sb.Draw(_solidColor, new Rectangle(x, y, width, height), c);
         }
     }
 }

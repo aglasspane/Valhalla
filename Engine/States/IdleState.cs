@@ -32,6 +32,9 @@ namespace Engine.States
                 case Action.Jump:
                     stateName = "jumpStart";
                     break;
+                case Action.HighKick:
+                    stateName = "highKick";
+                    break;  
             }
 
             return stateName;
