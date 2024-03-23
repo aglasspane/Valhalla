@@ -31,12 +31,14 @@ namespace Engine
 
         public virtual void Update(GameTime gameTime)
         {
+            float dt = gameTime.ElapsedGameTime.Milliseconds / 1000.0f;
+
             Position += Velocity;
             if (InAir)
             {
                 if (AffectedByGravity)
                 {
-                    Velocity += (float)gameTime.ElapsedGameTime.Milliseconds / 1000.0f * (Gravity + Accel);
+                    Velocity += dt * Gravity;
                 }
 
                 // Check if we have hit the temporary floor at 784px and stop any characters from going below it
@@ -51,6 +53,46 @@ namespace Engine
             else if (Position.Y < 784)
             {
                 InAir = true;
+            }
+
+            if(Position.X > 2000 - (64*4))
+            {
+                Velocity = new Vector2(0,Velocity.Y);
+                Position = new Vector2(900,400);  
+            }
+
+
+            if (Position.X < 0)
+            {
+                Velocity = new Vector2(0, Velocity.Y);
+                Position = new Vector2(900, 400);
+            }
+
+            // Deal with friction on the floor
+            if(!InAir)
+            {
+                if (Math.Abs(Velocity.X) > 0)
+                {
+                    Vector2 decelleration = Vector2.Zero;
+                    if (Velocity.X > 0)
+                    {
+                        decelleration = new Vector2(-5, 0);
+                    }
+                    else if (Velocity.X < 0)
+                    {
+                        decelleration = new Vector2(5, 0);
+                    }
+                    Velocity += dt * decelleration;
+                }
+
+                //if (Velocity.X <= 0 && Direction == Direction.Right)
+                //{
+                //    Accel = new Vector2(0, Accel.Y);
+                //}
+                //else if (!InAir && Velocity.X >= 0 && Direction == Direction.Left)
+                //{
+                //    Accel = new Vector2(0, Accel.Y);
+                //}
             }
         }
         public virtual void Draw(GameTime gameTime, SpriteBatch? gd)

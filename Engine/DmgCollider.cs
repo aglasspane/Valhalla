@@ -44,7 +44,7 @@ namespace Engine
             
             if(CausesKnockback && !_dealtDamage)
             {
-                Debug.WriteLine("Dealt damage" + howMuchDmg);
+                
                 _dealtDamage = true;
                 if(target is Character)
                 {
@@ -53,14 +53,17 @@ namespace Engine
                 if (Owner.Direction == Direction.Left)
                 {
                     target.Velocity += _knockBack;
+                    //target.Accel = new Vector2(10, 0);
                     Debug.WriteLine("Knockback Left: " + target.Velocity);
                 }
                 else
                 {
                     target.Velocity += _knockBack;
+                    //target.Accel = new Vector2(-10, 0);
                     Debug.WriteLine("Knockback Right: " + target.Velocity);
                 }
             }
+            
             
                 
         }
