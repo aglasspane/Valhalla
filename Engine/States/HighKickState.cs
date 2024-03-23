@@ -9,8 +9,8 @@ namespace Engine.States
 {
     internal class HighKickState : State    
     {
-        DmgCollider? dmgCollider;
-
+        private DmgCollider? dmgCollider;
+        private const float Dmg = 5f;
 
         public HighKickState(List<AnimationFrame> framesw) : base(framesw)
         {
@@ -24,12 +24,12 @@ namespace Engine.States
             {
                 if (moveable.Direction == Direction.Right)
                 {
-                    dmgCollider = new DmgCollider(moveable, new Rectangle(40, 6, 16, 16), 2, new Vector2(5, -10));
+                    dmgCollider = new DmgCollider(moveable, new Rectangle(40, 6, 16, 16), Dmg, new Vector2(5, -10));
 
                 }
                 else
                 {
-                    dmgCollider = new DmgCollider(moveable, new Rectangle(8, 6, 16, 16), 2, new Vector2(-5, -10));
+                    dmgCollider = new DmgCollider(moveable, new Rectangle(8, 6, 16, 16), Dmg, new Vector2(-5, -10));
 
                 }
                 moveable.Colliders.Add(dmgCollider);

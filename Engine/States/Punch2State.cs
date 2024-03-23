@@ -11,8 +11,8 @@ namespace Engine.States
     
     internal class Punch2State : State
     {
-        DmgCollider? dmgCollider;
-        
+        private DmgCollider? dmgCollider;
+        private const float Dmg = 1f;
         public Punch2State(List<AnimationFrame> framesw) : base(framesw)
         {
 
@@ -26,12 +26,12 @@ namespace Engine.States
             {
                 if (moveable.Direction == Direction.Right)
                 {
-                    dmgCollider = new DmgCollider(moveable, new Rectangle(40, 24, 16, 16), 0.1);
+                    dmgCollider = new DmgCollider(moveable, new Rectangle(40, 24, 16, 16), Dmg);
 
                 }
                 else
                 {
-                    dmgCollider = new DmgCollider(moveable, new Rectangle(8, 24, 16, 16), 0.1);
+                    dmgCollider = new DmgCollider(moveable, new Rectangle(8, 24, 16, 16), Dmg);
 
                 }
                 moveable.Colliders.Add(dmgCollider);

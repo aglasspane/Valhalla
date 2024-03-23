@@ -42,7 +42,7 @@ namespace Engine
 
         //public Rectangle? dmgBox;
 
-        public double percentDmgValue { get; protected set; } = 0;
+        public float PercentDmgValue { get; set; } = 0;
 
         
         
