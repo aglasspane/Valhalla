@@ -52,8 +52,8 @@ namespace Engine
 
             if(Font != null) 
             {
-                gd?.DrawString(Font, Convert.ToInt32(_fighter.PercentDmgValue).ToString() + "%" , new Vector2(100, 300), Color.Red);
-                gd?.DrawString(Font, Convert.ToInt32(_fighter2.PercentDmgValue).ToString() + "%", new Vector2(300, 300), Color.Red);
+                gd?.DrawString(Font, Convert.ToInt32(_fighter.PercentDmgValue).ToString() + "%" , new Vector2(550, 50), Color.Red);
+                gd?.DrawString(Font, Convert.ToInt32(_fighter2.PercentDmgValue).ToString() + "%", new Vector2(1250, 50), Color.Orange);
             }
 
             
