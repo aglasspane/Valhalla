@@ -12,6 +12,8 @@ namespace Engine
     {
         public ContentManager Content { get; protected set; }
 
+        
+        //<Summary>A list of all entities currently in the game world.</Summary>
         public List<Moveable> Entities { get; protected set; } = new List<Moveable>();
 
 

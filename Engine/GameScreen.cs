@@ -27,6 +27,7 @@ namespace Engine
        // public GameScreen(GraphicsDevice d, Texture2D t, Texture2D t2) : base(d, t, t2)
        public GameScreen(GraphicsDevice device, ContentManager content) : base(device, content) 
         {
+            //Pick all the textures out of the gameworld content rather than being passed through
             _world = new GameWorld(content);
             Texture2D t = _world.Content.Load<Texture2D>("Man");
             Texture2D t2 = _world.Content.Load<Texture2D>("Man");

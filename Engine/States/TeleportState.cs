@@ -27,15 +27,18 @@ namespace Engine.States
 
 
             base.Update(gameTime, moveable, _world);
+
+            //Get the other player than the one that is currently teleporting
             Character? other = GetOpponent(moveable, _world); 
             if (other?.Direction == Direction.Left && !finishedTeleport && other != null)
             {
-                Debug.WriteLine(moveable.Position + " " + other.Position);
+                //Move player that is teleporting behind the other player
                 finishedTeleport = true;
                 moveable.Position = new Vector2(other.Position.X + (64), other.Position.Y);
             }
             else if (other?.Direction == Direction.Right && !finishedTeleport && other != null)
             {
+                //Move player that is teleporting behind the other player
                 finishedTeleport = true;
                 moveable.Position = new Vector2(other.Position.X - (64), other.Position.Y);
             }
@@ -86,6 +89,8 @@ namespace Engine.States
         }
         private Character? GetOpponent(Moveable current, GameWorld _world)
         {
+            // Goes throught the list of moveables in GameWorld and gets both characters then 
+            // compares them both to see which is the current character doing the action
             foreach (var entity in _world.Entities)
             {
                 if (entity is Character characterEntity && entity != current)
