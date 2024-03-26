@@ -20,7 +20,7 @@ namespace Engine
 
     public enum Action
     {
-        Punch, MoveLeft, MoveRight, Jump, Hit, HighKick
+        Punch, MoveLeft, MoveRight, Jump, Hit, HighKick, Teleport
     }
     public abstract class Character : Moveable
     {
@@ -59,7 +59,7 @@ namespace Engine
            this.Direction = direction;  
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime, GameWorld _world)
         {
 
             //hitBox.X = (int)Position.X;
@@ -98,6 +98,10 @@ namespace Engine
             {
                 actionQueue.Enqueue(Action.HighKick);   
             }
+            if(currentGamePadState.IsButtonDown(Buttons.LeftShoulder))
+            {
+                actionQueue.Enqueue(Action.Teleport);
+            }
 
             Action? action = null;
             if (actionQueue.Count > 0) 
@@ -105,14 +109,14 @@ namespace Engine
                 action = actionQueue.Dequeue();
             }
 
-            string? newStateName = currentState?.NextStateName(action, this);
+            string? newStateName = currentState?.NextStateName(action, this, _world);
 
             if (newStateName != null)
             {
                 currentState?.Reset();
                 //dmgBox = null;
                 ChangeState(newStateName);
-                currentState?.Start(gameTime, this);
+                currentState?.Start(gameTime, this, _world);
                 Debug.WriteLine(newStateName);
 
             }
@@ -143,9 +147,9 @@ namespace Engine
             
 
             _previousGamePadState = currentGamePadState;
-            currentState?.Update(gameTime, this);
+            currentState?.Update(gameTime, this, _world);
 
-            base.Update(gameTime);
+            base.Update(gameTime, _world);
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch? spriteBatch)

@@ -17,9 +17,9 @@ namespace Engine.States
             Loopable = false;
 
         }
-        public override void Update(GameTime gameTime, Moveable moveable)
+        public override void Update(GameTime gameTime, Moveable moveable, GameWorld _world)
         {
-            base.Update(gameTime, moveable);
+            base.Update(gameTime, moveable, _world);
             float newX = moveable.Position.X;
             if (_direction == Direction.Left)
             {
@@ -34,7 +34,7 @@ namespace Engine.States
 
         }
 
-        public override string? NextStateName(Action? currentAction, Moveable moveable)
+        public override string? NextStateName(Action? currentAction, Moveable moveable, GameWorld _world)
         {
             string? stateName = null;
             if (currentAction == Action.MoveLeft)

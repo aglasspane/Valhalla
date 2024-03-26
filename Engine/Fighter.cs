@@ -131,6 +131,15 @@ namespace Engine
             states.Add("highKick", highKickState);
 
 
+            List<AnimationFrame> teleportFrames = new()
+            {
+                new AnimationFrame(0, 3, 200),
+                new AnimationFrame(2, 3, 200),
+            };
+            TeleportState teleportState = new(teleportFrames);
+            states.Add("teleport", teleportState);
+
+
             //The hitbox for the player
             Colliders.Add(new HitCollider(this, new Rectangle(16, 0, 32, 64)));
 

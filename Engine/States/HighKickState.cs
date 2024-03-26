@@ -17,7 +17,7 @@ namespace Engine.States
 
 
         }
-        public override string? NextStateName(Action? currentAction, Moveable moveable)
+        public override string? NextStateName(Action? currentAction, Moveable moveable, GameWorld _world)
         {
             string? stateName = null;
             if (dmgCollider == null)
@@ -35,8 +35,18 @@ namespace Engine.States
                 moveable.Colliders.Add(dmgCollider);
             }
 
-        
-            if (Finished)
+            if (currentAction == Action.Teleport && Finished)
+            {
+                stateName = "teleport";
+                if (dmgCollider != null)
+                {
+                    moveable.Colliders.Remove(dmgCollider);
+                    dmgCollider = null;
+                }
+
+                
+            }
+            else if (Finished)
             {
                 stateName = "idle";
                 if (dmgCollider != null)
@@ -45,6 +55,7 @@ namespace Engine.States
                     dmgCollider = null;
                 }
             }
+
 
             return stateName;
 

@@ -29,12 +29,12 @@ namespace Engine.States
             Frame = frames[_currentFrameNumber];
         }
 
-        public virtual void Start(GameTime gameTime, Moveable moveable)
+        public virtual void Start(GameTime gameTime, Moveable moveable, GameWorld _world)
         {
 
         }
 
-        public virtual void Update(GameTime gameTime, Moveable moveable)
+        public virtual void Update(GameTime gameTime, Moveable moveable, GameWorld _world)
         {
             _currentFrameTime += gameTime.ElapsedGameTime.Milliseconds;
 
@@ -63,7 +63,7 @@ namespace Engine.States
             return null;
         }
 
-        public virtual string? NextStateName(Action? currentAction, Moveable moveable)
+        public virtual string? NextStateName(Action? currentAction, Moveable moveable, GameWorld _world)
         {
             return NextStateName(currentAction);
         }

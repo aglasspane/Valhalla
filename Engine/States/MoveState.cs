@@ -11,15 +11,15 @@ namespace Engine.States
     internal class MoveState : State
     {
         private Direction _direction = Direction.Left;
-        private const float _movementDistance = 10f;
+        private const float _movementDistance = 7.5f;
         public MoveState(List<AnimationFrame> framesw) : base(framesw)
         {
             Loopable = false;
 
         }
-        public override void Update(GameTime gameTime, Moveable moveable)
+        public override void Update(GameTime gameTime, Moveable moveable, GameWorld _world)
         {
-            base.Update(gameTime, moveable);
+            base.Update(gameTime, moveable, _world);
             float newX = moveable.Position.X;
             if (_direction == Direction.Left)
             {
