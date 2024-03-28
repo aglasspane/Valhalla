@@ -56,6 +56,23 @@ namespace Engine
             Punch2State punchState2 = new(punchFrames2);
             states.Add("punch2", punchState2);
 
+            List<AnimationFrame> punchFrames3 = new()
+            {
+                new AnimationFrame(3, 2, 150),
+                
+            };
+            Punch3State punchState3 = new(punchFrames3);
+            states.Add("punch3", punchState3);
+
+            List<AnimationFrame> punchFrames4 = new()
+            {
+                new AnimationFrame(6, 2, 100),
+                new AnimationFrame(7, 2, 150),
+
+            };
+            Punch4State punchState4 = new(punchFrames4);
+            states.Add("punch4", punchState4);
+
             List<AnimationFrame> moveFrames = new()
             {
                 new AnimationFrame(1, 1, 200),
@@ -102,7 +119,7 @@ namespace Engine
             List<AnimationFrame> jumpFrames = new()
             {
                 //new AnimationFrame(12, 0, 150),
-                new AnimationFrame(7, 0, 50),
+                new AnimationFrame(7, 0, 10),
 
             };
             JumpState jumpState = new(jumpFrames);
@@ -140,6 +157,23 @@ namespace Engine
             states.Add("teleport", teleportState);
 
 
+            List<AnimationFrame> teleportAtkFrames = new()
+            {
+                new AnimationFrame(16, 2, 200),
+                new AnimationFrame(17, 2, 200),
+            };
+            TeleportAtkState teleportAtkState = new(teleportAtkFrames);
+            states.Add("teleportAtk", teleportAtkState);
+
+
+            List<AnimationFrame> beamFrames = new()
+            {
+                new AnimationFrame(5, 4, 200),
+                new AnimationFrame(6, 4, 200),
+                new AnimationFrame(7, 4, 300),
+            };
+            BeamState beamState = new(beamFrames);
+            states.Add("beam", beamState);
             //The hitbox for the player
             Colliders.Add(new HitCollider(this, new Rectangle(16, 0, 32, 64)));
 

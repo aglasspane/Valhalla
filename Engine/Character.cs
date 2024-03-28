@@ -20,7 +20,7 @@ namespace Engine
 
     public enum Action
     {
-        Punch, MoveLeft, MoveRight, Jump, Hit, HighKick, Teleport
+        Punch, MoveLeft, MoveRight, Jump, Hit, HighKick, Teleport, TeleportAtk, Beam
     }
     public abstract class Character : Moveable
     {
@@ -101,6 +101,14 @@ namespace Engine
             if(currentGamePadState.IsButtonDown(Buttons.LeftShoulder))
             {
                 actionQueue.Enqueue(Action.Teleport);
+            }
+            if(currentGamePadState.IsButtonDown(Buttons.LeftTrigger))
+            {
+                actionQueue.Enqueue(Action.TeleportAtk);
+            }
+            if (currentGamePadState.IsButtonDown(Buttons.RightTrigger))
+            {
+                actionQueue.Enqueue(Action.Beam);
             }
 
             Action? action = null;

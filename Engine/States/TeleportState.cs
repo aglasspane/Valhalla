@@ -34,13 +34,17 @@ namespace Engine.States
             {
                 //Move player that is teleporting behind the other player
                 finishedTeleport = true;
-                moveable.Position = new Vector2(other.Position.X + (64), other.Position.Y);
+                moveable.Position = new Vector2(other.Position.X + (64), other.Position.Y - 64);
+                other.Velocity = Vector2.Zero;
+                moveable.Direction = other.Direction;
             }
             else if (other?.Direction == Direction.Right && !finishedTeleport && other != null)
             {
                 //Move player that is teleporting behind the other player
                 finishedTeleport = true;
-                moveable.Position = new Vector2(other.Position.X - (64), other.Position.Y);
+                moveable.Position = new Vector2(other.Position.X - (64), other.Position.Y - 64);
+                other.Velocity = Vector2.Zero;
+                moveable.Direction = other.Direction;
             }
             
 
@@ -57,18 +61,18 @@ namespace Engine.States
             }
 
 
-            //if (currentAction == Action.TeleportAtk && Finished)
-            //{
-            //    stateName = "HighKick";
-            //    if (dmgCollider != null)
-            //    {
-            //        dmgCollider.CausesKnockback = false;
-            //    }
+            if (currentAction == Action.TeleportAtk && Finished)
+            {
+                stateName = "teleportAtk";
+                if (dmgCollider != null)
+                {
+                    dmgCollider.CausesKnockback = false;
+                }
 
-            //    DeleteCollider(moveable);
-            //}
-            //else
-            if (Finished)
+                DeleteCollider(moveable);
+                finishedTeleport = false;
+            }
+            else if (Finished)
             {
                 stateName = "idle";
                 DeleteCollider(moveable);

@@ -1,54 +1,43 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Engine.States
 {
-    internal class Punch1State : State
+    internal class TeleportAtkState : State 
     {
 
         private DmgCollider? dmgCollider;
-        private const float Dmg = 1f;
+        private const float Dmg = 10f;
 
-        public Punch1State(List<AnimationFrame> framesw) : base(framesw)
+        public TeleportAtkState(List<AnimationFrame> framesw) : base(framesw)
         {
 
-
+   
         }
+
         public override string? NextStateName(Action? currentAction, Moveable moveable, GameWorld _world)
         {
             string? stateName = null;
-            if(dmgCollider == null) 
+            if (dmgCollider == null)
             {
                 if (moveable.Direction == Direction.Right)
                 {
-                    dmgCollider = new DmgCollider(moveable, new Rectangle(40, 24, 16, 16), Dmg, new Vector2(1, 0));
+                    dmgCollider = new DmgCollider(moveable, new Rectangle(0, 0, 100, 100), Dmg, new Vector2(3, 10));
 
                 }
                 else
                 {
-                    dmgCollider = new DmgCollider(moveable, new Rectangle(8, 24, 16, 16), Dmg, new Vector2(-1, 0));
+                    dmgCollider = new DmgCollider(moveable, new Rectangle(-12, 0, 100, 100), Dmg, new Vector2(-3, 10));
 
                 }
                 moveable.Colliders.Add(dmgCollider);
             }
-            
-            if (currentAction == Action.Punch && Finished)
-            {
-                stateName = "punch2";
-                if(dmgCollider != null)
-                {
-                    dmgCollider.CausesKnockback = false;
-                }
-                
-                DeleteCollider(moveable);
-            }
-            else if (Finished)
+
+            if(Finished)
             {
                 stateName = "idle";
                 DeleteCollider(moveable);
@@ -66,6 +55,19 @@ namespace Engine.States
                 moveable.Colliders.Remove(dmgCollider);
                 dmgCollider = null;
             }
+        }
+        private Character? GetOpponent(Moveable current, GameWorld _world)
+        {
+            // Goes throught the list of moveables in GameWorld and gets both characters then 
+            // compares them both to see which is the current character doing the action
+            foreach (var entity in _world.Entities)
+            {
+                if (entity is Character characterEntity && entity != current)
+                {
+                    return characterEntity;
+                }
+            }
+            return null;
         }
     }
 }

@@ -34,7 +34,10 @@ namespace Engine.States
                     break;
                 case Action.HighKick:
                     stateName = "highKick";
-                    break;  
+                    break;
+                case Action.Beam:
+                    stateName = "beam";
+                    break;
             }
 
             return stateName;

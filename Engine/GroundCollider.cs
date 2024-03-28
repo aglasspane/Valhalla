@@ -9,7 +9,7 @@ namespace Engine
 {
     internal class GroundCollider : Collider    
     {
-        public GroundCollider(Moveable moveable, Rectangle GroundBox) : base(moveable, GroundBox)
+        public GroundCollider(Moveable moveable,Rectangle GroundBox) : base(moveable, GroundBox)
         {
 
         } 

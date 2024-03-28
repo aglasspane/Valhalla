@@ -19,6 +19,7 @@ namespace Engine
         protected Character _fighter;
         protected Character _fighter2;
         private readonly CollisionManager cm = new CollisionManager();
+        
         //protected List<Moveable> moveables = new List<Moveable>();
 
         public SpriteFont? Font { get; set; }
@@ -32,7 +33,7 @@ namespace Engine
             Texture2D t = _world.Content.Load<Texture2D>("Man");
             Texture2D t2 = _world.Content.Load<Texture2D>("Man");
             Font = _world.Content.Load<SpriteFont>("GameFont");
-
+            
             //These are the characters that spawn at the start 
             _fighter = new Fighter(t, new Vector2(200,0), 0 , Direction.Right, new Rectangle(0, 0, 64, 64), new Rectangle(-650, -650, 64, 64));
             _fighter2 = new Fighter(t2, new Vector2(1200, 0), 1, new Rectangle(400,0,64,64), new Rectangle(-600,-600,64 ,64));

@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,12 +7,11 @@ using System.Threading.Tasks;
 
 namespace Engine.States
 {
-    
-    internal class Punch2State : State
+    internal class Punch4State : State
     {
         private DmgCollider? dmgCollider;
-        private const float Dmg = 1f;
-        public Punch2State(List<AnimationFrame> framesw) : base(framesw)
+        private const float Dmg = 5f;
+        public Punch4State(List<AnimationFrame> framesw) : base(framesw)
         {
 
 
@@ -26,27 +24,28 @@ namespace Engine.States
             {
                 if (moveable.Direction == Direction.Right)
                 {
-                    dmgCollider = new DmgCollider(moveable, new Rectangle(40, 24, 16, 16), Dmg, new Vector2(1, 0));
+                    dmgCollider = new DmgCollider(moveable, new Rectangle(40, 24, 16, 16), Dmg, new Vector2(10,0));
 
                 }
                 else
                 {
-                    dmgCollider = new DmgCollider(moveable, new Rectangle(8, 24, 16, 16), Dmg, new Vector2(-1, 0));
+                    dmgCollider = new DmgCollider(moveable, new Rectangle(8, 24, 16, 16), Dmg, new Vector2(-10, 0));
 
                 }
                 moveable.Colliders.Add(dmgCollider);
             }
-            
-            if (currentAction == Action.Punch && Finished)
-            {
-                stateName = "punch3";
-                if (dmgCollider != null)
-                {
-                    dmgCollider.CausesKnockback = false;
-                }
-                DeleteCollider(moveable);
-            }
-            else if (Finished)
+
+            //if (currentAction == Action.Punch && Finished)
+            //{
+            //    stateName = "punch4";
+            //    if (dmgCollider != null)
+            //    {
+            //        dmgCollider.CausesKnockback = false;
+            //    }
+            //    DeleteCollider(moveable);
+            //}
+            //else
+            if (Finished)
             {
                 stateName = "idle";
                 if (dmgCollider != null)
@@ -58,7 +57,7 @@ namespace Engine.States
 
             return stateName;
 
-            
+
 
         }
         private void DeleteCollider(Moveable moveable)
