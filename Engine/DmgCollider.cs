@@ -46,13 +46,23 @@ namespace Engine
             {
                 
                 _dealtDamage = true;
-                if(target is Character)
+                if (target is Character targetChar)
                 {
-                    ((Character)target).PercentDmgValue += howMuchDmg;
+                    targetChar.PercentDmgValue += howMuchDmg;
+                    if (_knockBack.Y == 0)
+                    {
+                        targetChar.ChangeState("hit");
+                    }
+                    else if (_knockBack.Y != 0)
+                    {
+                        targetChar.ChangeState("verticalHit");
+                    }
+
                 }
                 if (Owner.Direction == Direction.Left)
                 {
                     target.Velocity += _knockBack;
+                    
                     //target.Accel = new Vector2(10, 0);
                     Debug.WriteLine("Knockback Left: " + target.Velocity);
                 }

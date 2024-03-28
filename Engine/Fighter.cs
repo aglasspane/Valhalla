@@ -130,6 +130,14 @@ namespace Engine
             HighKickState highKickState = new(highKickFrames);
             states.Add("highKick", highKickState);
 
+            List<AnimationFrame> verticalHitFrames = new()
+            {
+                new AnimationFrame(5, 3, 1000),
+
+            };
+            HitState verticalHitState = new(verticalHitFrames);
+            states.Add("verticalHit", verticalHitState);
+
 
             //The hitbox for the player
             Colliders.Add(new HitCollider(this, new Rectangle(16, 0, 32, 64)));
