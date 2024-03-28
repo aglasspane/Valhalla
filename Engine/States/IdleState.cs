@@ -5,20 +5,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Engine
+namespace Engine.States
 {
     internal class IdleState : State
     {
-        public IdleState(List<AnimationFrame> framesw) : base(framesw) 
-        { 
+        public IdleState(List<AnimationFrame> framesw) : base(framesw)
+        {
             Loopable = false;
         }
 
         public override string? NextStateName(Action? currentAction)
         {
             string? stateName = null;
-                
-            switch(currentAction)
+
+            switch (currentAction)
             {
                 case Action.Punch:
                     stateName = "punch";
@@ -30,7 +30,13 @@ namespace Engine
                     stateName = "move";
                     break;
                 case Action.Jump:
-                    stateName = "jump";
+                    stateName = "jumpStart";
+                    break;
+                case Action.HighKick:
+                    stateName = "highKick";
+                    break;
+                case Action.Beam:
+                    stateName = "beam";
                     break;
             }
 

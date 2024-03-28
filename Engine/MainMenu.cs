@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace Engine
 {
     public class MainMenu : MenuScreen
     {
-        public MainMenu(Texture2D t, Texture2D t2) : base(t, t2) 
+        public MainMenu(GraphicsDevice d, ContentManager content) : base(d, content)
         {
         
         }

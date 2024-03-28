@@ -1,31 +1,30 @@
-﻿using Microsoft.Xna.Framework.Input;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Engine
+namespace Engine.States
 {
-    internal class Punch1State : State
+    internal class VerticalHitState : State
     {
-        public Punch1State(List<AnimationFrame> framesw) : base(framesw)
+        public VerticalHitState(List<AnimationFrame> framesw) : base(framesw)
         {
-
+            Loopable = false;
 
         }
         public override string? NextStateName(Action? currentAction)
         {
             string? stateName = null;
-            if (currentAction == Action.Punch && Finished)
+            if (currentAction == Action.Hit && Finished)
             {
-                stateName = "punch2";
+                stateName = "verticalHit";
             }
             else if (Finished)
             {
                 stateName = "idle";
             }
-            
+
             return stateName;
 
         }
