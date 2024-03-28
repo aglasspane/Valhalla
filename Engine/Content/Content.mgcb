@@ -25,6 +25,18 @@
 /processorParam:TextureFormat=Color
 /build:Char_1.png;Man
 
+#begin Char_2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Char_2.png;Man2
+
 #begin Fighting Spirit 2.otf
 /copy:Fighting Spirit 2.otf
 

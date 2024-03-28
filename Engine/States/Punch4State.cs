@@ -35,16 +35,7 @@ namespace Engine.States
                 moveable.Colliders.Add(dmgCollider);
             }
 
-            //if (currentAction == Action.Punch && Finished)
-            //{
-            //    stateName = "punch4";
-            //    if (dmgCollider != null)
-            //    {
-            //        dmgCollider.CausesKnockback = false;
-            //    }
-            //    DeleteCollider(moveable);
-            //}
-            //else
+
             if (Finished)
             {
                 stateName = "idle";

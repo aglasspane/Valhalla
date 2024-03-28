@@ -19,20 +19,13 @@ namespace Engine
         protected Character _fighter;
         protected Character _fighter2;
         private readonly CollisionManager cm = new CollisionManager();
-        
-        //protected List<Moveable> moveables = new List<Moveable>();
 
-        public SpriteFont? Font { get; set; }
-
-
-       // public GameScreen(GraphicsDevice d, Texture2D t, Texture2D t2) : base(d, t, t2)
        public GameScreen(GraphicsDevice device, ContentManager content) : base(device, content) 
         {
             //Pick all the textures out of the gameworld content rather than being passed through
             _world = new GameWorld(content);
             Texture2D t = _world.Content.Load<Texture2D>("Man");
-            Texture2D t2 = _world.Content.Load<Texture2D>("Man");
-            Font = _world.Content.Load<SpriteFont>("GameFont");
+            Texture2D t2 = _world.Content.Load<Texture2D>("Man2");
             
             //These are the characters that spawn at the start 
             _fighter = new Fighter(t, new Vector2(200,0), 0 , Direction.Right, new Rectangle(0, 0, 64, 64), new Rectangle(-650, -650, 64, 64));
@@ -56,16 +49,13 @@ namespace Engine
                 }
                 item.Draw(gameTime, gd);
             }
-            //_fighter.Draw(gameTime, gd);
-            //_fighter2.Draw(gameTime, gd);
-
-            if(Font != null) 
-            {
-                gd?.DrawString(Font, Convert.ToInt32(_fighter.PercentDmgValue).ToString() + "%" , new Vector2(550, 50), Color.Red);
-                gd?.DrawString(Font, Convert.ToInt32(_fighter2.PercentDmgValue).ToString() + "%", new Vector2(1250, 50), Color.Orange);
-                gd?.DrawString(Font, Convert.ToInt32(_fighter.Lives).ToString() + " Lives", new Vector2(550, 100), Color.Red);
-                gd?.DrawString(Font, Convert.ToInt32(_fighter2.Lives).ToString() + " Lives", new Vector2(1250, 100), Color.Orange);
-            }
+  
+           
+            gd?.DrawString(_font, Convert.ToInt32(_fighter.PercentDmgValue).ToString() + "%" , new Vector2(550, 50), Color.Red);
+            gd?.DrawString(_font, Convert.ToInt32(_fighter2.PercentDmgValue).ToString() + "%", new Vector2(1250, 50), Color.Orange);
+            gd?.DrawString(_font, Convert.ToInt32(_fighter.Lives).ToString() + " Lives", new Vector2(550, 100), Color.Red);
+            gd?.DrawString(_font, Convert.ToInt32(_fighter2.Lives).ToString() + " Lives", new Vector2(1250, 100), Color.Orange);
+           
 
             
 
@@ -75,7 +65,7 @@ namespace Engine
         public override void Update(GameTime gameTime)
         {
             
-            //cm.HandleHit(_fighter, _fighter2);
+
             foreach (var item in _world.Entities)
             {
                 item.Update(gameTime, _world);
@@ -83,11 +73,17 @@ namespace Engine
             }
             cm.HandleCollisons(_world.Entities);
             
-            
-            
+            if(_fighter.Lives == 0 || _fighter2.Lives == 0)
+            {
+                _fighter.Reset();
+                _fighter2.Reset();
+                OnScreenChange("VictoryScreen");
+                
+            }
 
 
-            base.Update(gameTime);
+
+                base.Update(gameTime);
         }
     }
 }

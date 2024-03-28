@@ -56,7 +56,7 @@ namespace Engine
             {
                 InAir = true;
             }
-            //create method that does this and call in character 
+
             
 
             // Deal with friction on the floor
@@ -75,15 +75,6 @@ namespace Engine
                     }
                     Velocity += dt * decelleration;
                 }
-
-                //if (Velocity.X <= 0 && Direction == Direction.Right)
-                //{
-                //    Accel = new Vector2(0, Accel.Y);
-                //}
-                //else if (!InAir && Velocity.X >= 0 && Direction == Direction.Left)
-                //{
-                //    Accel = new Vector2(0, Accel.Y);
-                //}
             }
         }
         public virtual void Draw(GameTime gameTime, SpriteBatch? gd)

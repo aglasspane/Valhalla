@@ -38,23 +38,19 @@ namespace Engine
 
         public Queue<Action> actionQueue = new();
 
-        //public Rectangle hitBox;
-
-        //public Rectangle? dmgBox;
-
         public float PercentDmgValue { get; set; } = 0;
 
         public int Lives { get; protected set; } = 3;
 
-
+        private Vector2 startPos;
 
 
         public Character(Vector2 position, int playerIndex, Rectangle hitBox, Rectangle dmgBox)
         {
             this.Position = position;
+            this.startPos = position;   
             this.playerIndex = playerIndex;
-            //this.hitBox = hitBox;   
-            //this.dmgBox = dmgBox;
+
         }
         public Character(Vector2 position, int playerIndex, Direction direction, Rectangle hitBox, Rectangle dmgBox) : this(position, playerIndex, hitBox, dmgBox) 
         {
@@ -63,12 +59,6 @@ namespace Engine
 
         public override void Update(GameTime gameTime, GameWorld _world)
         {
-
-            //hitBox.X = (int)Position.X;
-            //hitBox.Y = (int)Position.Y;
-            
-            
-            
 
             //This records the current state of the gamepad in each 
             GamePadState currentGamePadState = GamePad.GetState(playerIndex);
@@ -81,7 +71,7 @@ namespace Engine
             if (currentGamePadState.IsButtonDown(Buttons.X) || currentKeyboardState.IsKeyDown(Keys.E))
             {
                     actionQueue.Enqueue(Action.Punch);
-                    //dmgBox = new Rectangle((int)Position.X + 64, (int)Position.Y + 24 , 16, 16);  
+
             }
 
             if (currentGamePadState.ThumbSticks.Left.X > 0 || currentKeyboardState.IsKeyDown(Keys.D))
@@ -124,7 +114,7 @@ namespace Engine
             if (newStateName != null)
             {
                 currentState?.Reset();
-                //dmgBox = null;
+
                 ChangeState(newStateName);
                 currentState?.Start(gameTime, this, _world);
                 Debug.WriteLine(newStateName);
@@ -147,28 +137,6 @@ namespace Engine
                 PercentDmgValue = 0;
             }
 
-            //if (newStateName == "idle")
-            //{
-            //    dmgBox = null;
-            //}
-
-
-
-
-            //if (action == Action.Hit)
-            //{
-            //    percentDmgValue = percentDmgValue + 0.1f;   
-            //}
-
-
-            //if (currentGamePadState.IsButtonDown(Buttons.Y) && !_previousGamePadState.GetValueOrDefault().IsButtonDown(Buttons.Y))
-            //{
-            //    ChangeState("sword");
-            //}
-            //if (currentGamePadState.IsButtonDown(Buttons.A) && !_previousGamePadState.GetValueOrDefault().IsButtonDown(Buttons.A) && (currentGamePadState.ThumbSticks.Left.X < 0 || currentGamePadState.ThumbSticks.Left.X > 0))
-            //{
-            //    ChangeState("moveAtk");
-            //}
 
 
 
@@ -203,9 +171,16 @@ namespace Engine
 
         public virtual void ChangeState(string newStateName)
         {
-            // implement this so it works
+
             currentState = states[newStateName];
             CurrentStateName = newStateName;
+        }
+
+        public void Reset()
+        {
+            Lives = 3;
+            Position = startPos;
+            PercentDmgValue = 0f;   
         }
     }
 }

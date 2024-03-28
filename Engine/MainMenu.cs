@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,11 +19,22 @@ namespace Engine
 
         public override void Draw(GameTime gameTime, SpriteBatch? sb)
         {
-            if (sb != null)
-            {
-                DrawRectangle(sb, 10, 10, 100, 100, Color.Aqua);
-            }
+            
             base.Draw(gameTime, sb);
+            DrawCenteredString(sb, "VALHALLA", Color.Red, 200);
+            DrawCenteredString(sb, "Battleground of the gods", Color.Red, 300);
+
+            DrawCenteredString(sb, "Press A to start", Color.Red, null);
+
         }
+
+        public override void Update(GameTime gameTime)
+        {
+            if (GamePad.GetState(0).IsButtonDown(Buttons.A) || GamePad.GetState(1).IsButtonDown(Buttons.A))
+            {
+                OnScreenChange("GameScreen");
+            }
+        }
+
     }
 }

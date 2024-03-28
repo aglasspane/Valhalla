@@ -32,7 +32,7 @@ namespace Engine
 
                 new AnimationFrame(0, 0, 500),
                 new AnimationFrame(1, 0, 100),
-                
+
             };
 
             //This creates a state which relates to the animation meaning you can use it to change the animation
@@ -59,7 +59,7 @@ namespace Engine
             List<AnimationFrame> punchFrames3 = new()
             {
                 new AnimationFrame(3, 2, 150),
-                
+
             };
             Punch3State punchState3 = new(punchFrames3);
             states.Add("punch3", punchState3);
@@ -104,7 +104,7 @@ namespace Engine
             List<AnimationFrame> hitFrames = new()
             {
                 new AnimationFrame(3, 3, 500),
-                
+
             };
             HitState hitState = new(hitFrames);
             states.Add("hit", hitState);
@@ -118,7 +118,7 @@ namespace Engine
 
             List<AnimationFrame> jumpFrames = new()
             {
-                //new AnimationFrame(12, 0, 150),
+
                 new AnimationFrame(7, 0, 10),
 
             };
@@ -191,11 +191,4 @@ namespace Engine
         }
 
     }
-    //Other attack frames
-    //new AnimationFrame(new Rectangle(192, 128, 64, 64), 100),
-    //new AnimationFrame(new Rectangle(256, 128, 64, 64), 100),
-    //new AnimationFrame(new Rectangle(320, 128, 64, 64), 200),
-    //new AnimationFrame(new Rectangle(384, 128, 64, 64), 100),
-    //new AnimationFrame(new Rectangle(448, 128, 64, 64), 200)
 }
-

@@ -22,8 +22,8 @@ namespace Engine
         {
             _graphics = new GraphicsDeviceManager(this);
 
-            _graphics.PreferredBackBufferWidth = 2000;
-            _graphics.PreferredBackBufferHeight = 1024; 
+            _graphics.PreferredBackBufferWidth = 1920;
+            _graphics.PreferredBackBufferHeight = 1080; 
 
             _graphics.IsFullScreen = true; 
     
@@ -38,23 +38,32 @@ namespace Engine
 
         protected override void LoadContent()
         {
+            Content.RootDirectory = "Content";
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-          
+
+            MainMenu mainMenu = new MainMenu(GraphicsDevice, Content);
+            mainMenu.ScreenChange += ChangeActiveScreen;
+            _screens.Add("MainMenu", mainMenu);
+            // TODO: use this.Content to load your game content here
+
 
             
 
-    
-
-            _screens.Add("MainMenu", new MainMenu(GraphicsDevice, Content));
-            // TODO: use this.Content to load your game content here
-            //ChangeActiveScreen("MainMenu");
-
-            Content.RootDirectory = "Content";
+            GameScreen gameScreen = new GameScreen(GraphicsDevice, Content);
+            gameScreen.ScreenChange += ChangeActiveScreen;
+            _screens.Add("GameScreen", gameScreen);
 
 
-            _screens.Add("GameScreen", new GameScreen(GraphicsDevice, Content));
-            ChangeActiveScreen("GameScreen");
+
+            VictoryScreen victoryScreen = new VictoryScreen(GraphicsDevice, Content);
+            victoryScreen.ScreenChange += ChangeActiveScreen;
+            _screens.Add("VictoryScreen", victoryScreen);
+
+
+
+
+            ChangeActiveScreen(null,"MainMenu");
 
 
         }
@@ -78,9 +87,8 @@ namespace Engine
 
             base.Draw(gameTime);
 
-
         }
-        public void ChangeActiveScreen(string screenName)
+        public void ChangeActiveScreen(object? sender, string screenName)
         {
             _activeScreen = _screens[screenName];
         }
