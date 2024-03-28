@@ -28,6 +28,8 @@ namespace Engine
 
         public int Scale { get; } = 3;
 
+       
+
 
         public virtual void Update(GameTime gameTime, GameWorld _world)
         {
@@ -54,19 +56,8 @@ namespace Engine
             {
                 InAir = true;
             }
-
-            if(Position.X > 2000 + (64*4))
-            {
-                Velocity = new Vector2(0,Velocity.Y);
-                Position = new Vector2(900,400);  
-            }
-
-
-            if (Position.X < (-64*4))
-            {
-                Velocity = new Vector2(0, Velocity.Y);
-                Position = new Vector2(900, 400);
-            }
+            //create method that does this and call in character 
+            
 
             // Deal with friction on the floor
             if(!InAir)

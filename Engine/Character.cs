@@ -44,8 +44,10 @@ namespace Engine
 
         public float PercentDmgValue { get; set; } = 0;
 
-        
-        
+        public int Lives { get; protected set; } = 3;
+
+
+
 
         public Character(Vector2 position, int playerIndex, Rectangle hitBox, Rectangle dmgBox)
         {
@@ -128,6 +130,22 @@ namespace Engine
                 Debug.WriteLine(newStateName);
 
             }
+            if (Position.X > 2000 + (64 * 4))
+            {
+                Velocity = new Vector2(0, Velocity.Y);
+                Position = new Vector2(900, 400);
+                Lives--;
+                PercentDmgValue = 0; 
+            }
+
+
+            if (Position.X < (-64 * 4))
+            {
+                Velocity = new Vector2(0, Velocity.Y);
+                Position = new Vector2(900, 400);
+                Lives--;
+                PercentDmgValue = 0;
+            }
 
             //if (newStateName == "idle")
             //{
@@ -136,7 +154,7 @@ namespace Engine
 
 
 
-            
+
             //if (action == Action.Hit)
             //{
             //    percentDmgValue = percentDmgValue + 0.1f;   
@@ -152,7 +170,7 @@ namespace Engine
             //    ChangeState("moveAtk");
             //}
 
-            
+
 
             _previousGamePadState = currentGamePadState;
             currentState?.Update(gameTime, this, _world);

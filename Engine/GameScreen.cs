@@ -63,6 +63,8 @@ namespace Engine
             {
                 gd?.DrawString(Font, Convert.ToInt32(_fighter.PercentDmgValue).ToString() + "%" , new Vector2(550, 50), Color.Red);
                 gd?.DrawString(Font, Convert.ToInt32(_fighter2.PercentDmgValue).ToString() + "%", new Vector2(1250, 50), Color.Orange);
+                gd?.DrawString(Font, Convert.ToInt32(_fighter.Lives).ToString() + " Lives", new Vector2(550, 100), Color.Red);
+                gd?.DrawString(Font, Convert.ToInt32(_fighter2.Lives).ToString() + " Lives", new Vector2(1250, 100), Color.Orange);
             }
 
             
