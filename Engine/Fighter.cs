@@ -147,6 +147,14 @@ namespace Engine
             HighKickState highKickState = new(highKickFrames);
             states.Add("highKick", highKickState);
 
+            List<AnimationFrame> verticalHitFrames = new()
+            {
+                new AnimationFrame(5, 3, 1000),
+
+            };
+            HitState verticalHitState = new(verticalHitFrames);
+            states.Add("verticalHit", verticalHitState);
+
 
             List<AnimationFrame> teleportFrames = new()
             {
