@@ -26,10 +26,10 @@ namespace Engine
 
         public List<Collider> Colliders { get; protected set; } = new();
 
-        public int Scale { get; } = 4;
+        public int Scale { get; } = 3;
 
 
-        public virtual void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime, GameWorld _world)
         {
             float dt = gameTime.ElapsedGameTime.Milliseconds / 1000.0f;
 
@@ -55,14 +55,14 @@ namespace Engine
                 InAir = true;
             }
 
-            if(Position.X > 2000 - (64*4))
+            if(Position.X > 2000 + (64*4))
             {
                 Velocity = new Vector2(0,Velocity.Y);
                 Position = new Vector2(900,400);  
             }
 
 
-            if (Position.X < 0)
+            if (Position.X < (-64*4))
             {
                 Velocity = new Vector2(0, Velocity.Y);
                 Position = new Vector2(900, 400);
@@ -76,11 +76,11 @@ namespace Engine
                     Vector2 decelleration = Vector2.Zero;
                     if (Velocity.X > 0)
                     {
-                        decelleration = new Vector2(-5, 0);
+                        decelleration = new Vector2(-10, 0);
                     }
                     else if (Velocity.X < 0)
                     {
-                        decelleration = new Vector2(5, 0);
+                        decelleration = new Vector2(10, 0);
                     }
                     Velocity += dt * decelleration;
                 }

@@ -19,7 +19,7 @@ namespace Engine.States
 
 
         }
-        public override string? NextStateName(Action? currentAction, Moveable moveable)
+        public override string? NextStateName(Action? currentAction, Moveable moveable, GameWorld _world)
         {
             string? stateName = null;
             if (dmgCollider == null)
