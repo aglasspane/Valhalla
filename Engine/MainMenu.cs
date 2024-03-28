@@ -10,17 +10,18 @@ using System.Threading.Tasks;
 
 namespace Engine
 {
-    public class MainMenu : MenuScreen
+    public class MainMenu : Screen
     {
-        public MainMenu(GraphicsDevice d, ContentManager content) : base(d, content)
+        public MainMenu(GraphicsDevice device, ContentManager content) : base(device, content)
         {
-        
+            _background = content.Load<Texture2D>("MainBackground");
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch? sb)
         {
             
             base.Draw(gameTime, sb);
+            
             DrawCenteredString(sb, "VALHALLA", Color.Red, 200);
             DrawCenteredString(sb, "Battleground of the gods", Color.Red, 300);
 
@@ -30,6 +31,7 @@ namespace Engine
 
         public override void Update(GameTime gameTime)
         {
+            base.Update(gameTime);
             if (GamePad.GetState(0).IsButtonDown(Buttons.A) || GamePad.GetState(1).IsButtonDown(Buttons.A))
             {
                 OnScreenChange("GameScreen");

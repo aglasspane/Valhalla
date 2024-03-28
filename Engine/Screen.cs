@@ -18,6 +18,7 @@ namespace Engine
         public event EventHandler<string>? ScreenChange;
 
         public SpriteFont _font;
+        protected Texture2D? _background;
 
         public Screen(GraphicsDevice device, ContentManager content)
         {
@@ -34,7 +35,10 @@ namespace Engine
 
         public virtual void Draw(GameTime gameTime, SpriteBatch? gd)
         {
-
+            if (_background != null)
+            {
+                gd?.Draw(_background, Vector2.Zero, null, Color.White);
+            }
         }
 
         protected void DrawRectangle(SpriteBatch sb, int x, int y, int width, int height, Color c)

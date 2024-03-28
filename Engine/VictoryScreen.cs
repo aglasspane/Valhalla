@@ -12,8 +12,10 @@ namespace Engine
 {
     internal class VictoryScreen : Screen
     {
+        
         public VictoryScreen(GraphicsDevice device, ContentManager content) : base(device, content)
         {
+            _background = content.Load<Texture2D>("VictoryBackground");
         }
 
 
@@ -29,6 +31,7 @@ namespace Engine
         public override void Draw(GameTime gameTime, SpriteBatch? gd)
         {
             base.Draw(gameTime, gd);
+            //Draw background here
             DrawCenteredString(gd, "VICTORY!", Color.Gold, null);
 
         }

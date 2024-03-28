@@ -28,6 +28,8 @@ namespace Engine
 
         public int Scale { get; } = 3;
 
+        private const int _floor = 850;
+
        
 
 
@@ -43,16 +45,16 @@ namespace Engine
                     Velocity += dt * Gravity;
                 }
 
-                // Check if we have hit the temporary floor at 784px and stop any characters from going below it
-                if (Position.Y >= 784)
+                // Check if we have hit the temporary floor at _floor pixels and stop any characters from going below it
+                if (Position.Y >= _floor)
                 {
                     Velocity = new(Velocity.X, 0);
-                    Position = new(Position.X, 784);
+                    Position = new(Position.X, _floor   );
                     Debug.WriteLine("Hit Floor: " + Position);
                     InAir = false;
                 }
             }
-            else if (Position.Y < 784)
+            else if (Position.Y < _floor)
             {
                 InAir = true;
             }
