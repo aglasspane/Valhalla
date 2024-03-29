@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
@@ -23,12 +24,14 @@ namespace Engine.States
         protected int _currentFrameNumber = 0;
 
 
+
         public State(List<AnimationFrame> framesw)
         {
             frames = framesw;
             Frame = frames[_currentFrameNumber];
         }
 
+        
         public virtual void Start(GameTime gameTime, Moveable moveable, GameWorld _world)
         {
 
@@ -56,6 +59,10 @@ namespace Engine.States
                 _currentFrameTime = 0;
                 Frame = frames[_currentFrameNumber];
             }
+
+        }
+        public virtual void Draw(GameTime gameTime, SpriteBatch sb, Moveable moveable)
+        {
 
         }
         public virtual string? NextStateName(Action? currentAction)

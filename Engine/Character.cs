@@ -32,6 +32,8 @@ namespace Engine
 
         protected Texture2D? spriteSheet;
 
+        protected Texture2D? beamSpritesheet;
+
         protected GamePadState? _previousGamePadState = null;
 
         protected int playerIndex;
@@ -150,7 +152,7 @@ namespace Engine
         {
          
             
-            if (currentState is not null)
+            if (currentState is not null && spriteBatch is not null)
             {
                 Rectangle dest = new();
                 dest.X = (int)Position.X;
@@ -165,7 +167,8 @@ namespace Engine
                 }
 
 
-                spriteBatch?.Draw(spriteSheet, dest, currentState.Frame.SourceRectangle, Color.White,0f, Vector2.Zero, spriteEffects, 0f);
+                spriteBatch.Draw(spriteSheet, dest, currentState.Frame.SourceRectangle, Color.White,0f, Vector2.Zero, spriteEffects, 0f);
+                currentState.Draw(gameTime, spriteBatch, this);
             }
         }
 

@@ -73,6 +73,18 @@
 /processorParam:TextureFormat=Color
 /build:Char_2.png;Man2
 
+#begin dragon_ball_z_lsw_attack_sprites_by_saiyagami_d5ebxcw.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:dragon_ball_z_lsw_attack_sprites_by_saiyagami_d5ebxcw.png;KiEffects
+
 #begin Fighting Spirit 2.otf
 /copy:Fighting Spirit 2.otf
 

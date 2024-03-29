@@ -23,10 +23,10 @@ namespace Engine
             _graphics = new GraphicsDeviceManager(this);
 
             _graphics.PreferredBackBufferWidth = 1920;
-            _graphics.PreferredBackBufferHeight = 1080; 
+            _graphics.PreferredBackBufferHeight = 1080;
 
             _graphics.IsFullScreen = true; 
-    
+
         }
 
         protected override void Initialize()

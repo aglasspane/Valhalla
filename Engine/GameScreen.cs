@@ -27,11 +27,12 @@ namespace Engine
             _world = new GameWorld(content);
             Texture2D t = _world.Content.Load<Texture2D>("Man");
             Texture2D t2 = _world.Content.Load<Texture2D>("Man2");
+            Texture2D t3 = _world.Content.Load<Texture2D>("KiEffects");
             _background = _world.Content.Load<Texture2D>("FightBackground");
             
             //These are the characters that spawn at the start 
-            _fighter = new Fighter(t, new Vector2(200,0), 0 , Direction.Right, new Rectangle(0, 0, 64, 64), new Rectangle(-650, -650, 64, 64));
-            _fighter2 = new Fighter(t2, new Vector2(1200, 0), 1, new Rectangle(400,0,64,64), new Rectangle(-600,-600,64 ,64));
+            _fighter = new Fighter(t, t3, new Vector2(200,0), 0 , Direction.Right, new Rectangle(0, 0, 64, 64), new Rectangle(-650, -650, 64, 64));
+            _fighter2 = new Fighter(t2, t3, new Vector2(1200, 0), 1, new Rectangle(400,0,64,64), new Rectangle(-600,-600,64 ,64));
             _world.Entities.Add(_fighter);
             _world.Entities.Add(_fighter2);
             
@@ -44,15 +45,15 @@ namespace Engine
             base.Draw(gameTime, gd);
             foreach (var item in _world.Entities)
             {
-                
-                foreach (var collider in item.Colliders)
-                {
-                    if(gd != null)
-                    {
-                        DrawRectangle(gd, collider.Bounds.X + (int)collider.Owner.Position.X, collider.Bounds.Y + (int)collider.Owner.Position.Y, collider.Bounds.Width, collider.Bounds.Height, Color.Red);
-                    }
-                    
-                }
+                //Uncomment to see HitBoxes
+                //foreach (var collider in item.Colliders)
+                //{
+                //    if (gd != null)
+                //    {
+                //        DrawRectangle(gd, collider.Bounds.X + (int)collider.Owner.Position.X, collider.Bounds.Y + (int)collider.Owner.Position.Y, collider.Bounds.Width, collider.Bounds.Height, Color.Red);
+                //    }
+
+                //}
                 item.Draw(gameTime, gd);
             }
   

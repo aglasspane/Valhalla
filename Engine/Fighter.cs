@@ -11,20 +11,22 @@ namespace Engine
 {
     public class Fighter : Character
     {
-        public Fighter(Texture2D t, Vector2 position, int playerIndex, Rectangle hitBox, Rectangle dmgBox) : base(position, playerIndex, hitBox, dmgBox)
+        public Fighter(Texture2D manSprites, Texture2D beamSprites, Vector2 position, int playerIndex, Rectangle hitBox, Rectangle dmgBox) : base(position, playerIndex, hitBox, dmgBox)
         {
-            Initialize(t);
+            Initialize(manSprites, beamSprites);
         }
 
-        public Fighter(Texture2D t, Vector2 position, int playerIndex, Direction direction, Rectangle hitBox, Rectangle dmgBox) : base(position, playerIndex, direction, hitBox, dmgBox)
+        public Fighter(Texture2D manSprites, Texture2D beamSprites, Vector2 position, int playerIndex, Direction direction, Rectangle hitBox, Rectangle dmgBox) : base(position, playerIndex, direction, hitBox, dmgBox)
         {
-            Initialize(t);
+            Initialize(manSprites, beamSprites);
         }
 
-        private void Initialize(Texture2D t)
+
+        private void Initialize(Texture2D manSprites, Texture2D beamSprites)
         {
             //This method contains all animations for the fighter class
-            spriteSheet = t;
+            spriteSheet = manSprites;
+            beamSpritesheet = beamSprites;  
 
             List<AnimationFrame> frames = new()
             {
@@ -180,9 +182,11 @@ namespace Engine
                 new AnimationFrame(6, 4, 200),
                 new AnimationFrame(7, 4, 300),
             };
-            BeamState beamState = new(beamFrames);
+            BeamState beamState = new(beamFrames, beamSpritesheet);
             states.Add("beam", beamState);
             //The hitbox for the player
+
+
             Colliders.Add(new HitCollider(this, new Rectangle(16, 0, 32, 64)));
 
 
