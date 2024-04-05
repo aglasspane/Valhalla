@@ -33,6 +33,7 @@ namespace Engine
             base.Draw(gameTime, gd);
             //Draw background here
             DrawCenteredString(gd, "VICTORY!", Color.Gold, null);
+            DrawCenteredString(gd, "Press B to return to main menu", Color.Gold, 712);
 
         }
     }
